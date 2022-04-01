@@ -2,6 +2,7 @@ import React from 'react'
 import Title from '../../components/Title/Title'
 import AuthenticationService from '../../service/AuthenticationService'
 import shopLoginPage from './shop-login-page.jpg'
+import './Login.scss'
 
 const Login = () => {
   return (

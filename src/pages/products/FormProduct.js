@@ -105,6 +105,27 @@ const FormProduct = () => {
                                         </div>
                                     </div>
 
+                                     {/* Ram */}
+                                     <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Ram</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field as='select' name='mark' className='form-select'>
+                                                <option label="RAM" />
+                                                <option value="2Go" label="2Go" />  
+                                                <option value="4Go" label="4Go" />  
+                                                <option value="6Go" label="6Go" />  
+                                                <option value="8Go" label="8Go" />  
+                                                <option value="16Go" label="16Go" />
+                                                <option value="32Go" label="32Go" />  
+                                            </Field>
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='reference'/>
+                                        </div>
+                                    </div>
+
                                     {/* Reference */}
                                     <div className='row mb-2 g-3 align-items-center'>
                                         <div className='col-3'>
@@ -118,7 +139,26 @@ const FormProduct = () => {
                                         </div>
                                     </div>
 
-                                     {/* Processeur */}
+                                    {/* Stockage */}
+                                     <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Stockage</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field as='select' name='stockage' className='form-select'>
+                                                <option label="Stockage" />
+                                                <option value="128 Go" label="128Go" />  
+                                                <option value="512 Go" label="512Go" />  
+                                                <option value="1 To" label="1To" />  
+                                                <option value="2 To" label="2To" />   
+                                            </Field>
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='reference'/>
+                                        </div>
+                                    </div>
+
+                                    {/* Processeur */}
                                      <div className='row mb-2 g-3 align-items-center'>
                                         <div className='col-3'>
                                             <label className='col-form-label'>Processeur</label>
@@ -130,6 +170,80 @@ const FormProduct = () => {
                                             <ErrorMessage component="span" className='text-danger form-text' name='reference'/>
                                         </div>
                                     </div>
+
+                                    {/* Qauntite */}
+                                    <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Quantité</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field as='select' name='quantite' className='form-select'>
+                                                <option label="Quantité" />
+                                                {[...Array(10).keys()].map(element => (
+                                                     <option value={element+1} label={element+1} />  
+                                                ))}
+                                               
+                                            </Field>
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='reference'/>
+                                        </div>
+                                    </div>
+
+                                    {/* Ecran */}
+                                    <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Ecran</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field type="text" name="ecran"  className='form-control' />
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='ecran'/>
+                                        </div>
+                                    </div>
+
+                                    {/* Fréquence */}
+                                    <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Fréquence</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field type="text" name="frequence"  className='form-control' />
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='frequence'/>
+                                        </div>
+                                    </div>
+
+                                    {/* Système d'exploitation */}
+                                    <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Système d’exploitation</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field type="text" name="frequence"  className='form-control' />
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='frequence'/>
+                                        </div>
+                                    </div>
+
+                                    {/* Autonomie */}
+                                    <div className='row mb-2 g-3 align-items-center'>
+                                        <div className='col-3'>
+                                            <label className='col-form-label'>Autonomie</label>
+                                        </div>
+                                        <div className='col-6'>
+                                            <Field type="text" name="frequence"  className='form-control' />
+                                        </div>
+                                        <div className='col-3'>
+                                            <ErrorMessage component="span" className='text-danger form-text' name='frequence'/>
+                                        </div>
+                                    </div>
+
+
+
                                     
                                     <button className="btn btn-primary" type="submit">Enregistrer</button>
                                 </Form>

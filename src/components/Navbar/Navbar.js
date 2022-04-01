@@ -16,7 +16,7 @@ const Navbar = ({onClick}) => {
                     <span style={{cursor: 'pointer'}}>
                         <AiOutlineMenu onClick={onClick}/>
                     </span>
-                    <Link className="navbar-brand mx-3" to="/">Sou9</Link>
+                    <Link className="navbar-brand mx-3" to="/">Mehdi Computers</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

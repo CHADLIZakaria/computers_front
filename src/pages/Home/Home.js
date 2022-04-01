@@ -25,7 +25,7 @@ const Home = () => {
     
     return (
         <div className='container'>
-            <Title title='Sou9' />
+            <Title title='Mehdi Computers' />
             {isLoading ? 
                 <Progress />
                 :
