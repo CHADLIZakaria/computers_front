@@ -1,0 +1,21 @@
+.product {
+    .product-image {
+        img {
+            box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+            border: none;
+            border-radius: 10px;
+        }
+    }
+    .product-price {
+        font-size: 20px;
+        color: red;
+        font-weight: bold;
+    }
+    .product-information {
+        background-color: transparent !important;
+        border: none;
+        .product-information-title {
+            margin-bottom: 5px;
+        }
+    }
+}

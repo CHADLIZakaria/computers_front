@@ -1,0 +1,19 @@
+.table-manage {
+    thead {
+        tr td {
+            text-transform: capitalize;
+        }
+    }
+    tbody {
+        tr:nth-child(even) {
+            background-color: #D8D2CB !important;
+        }
+        tr:nth-child(odd) {
+            background-color: #EEEEEE !important;
+        }
+    }
+    img {
+        width: 32px;
+        height: 32px;
+    }
+}
