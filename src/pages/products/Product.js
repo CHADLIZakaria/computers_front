@@ -46,9 +46,16 @@ const Product = () => {
                                     <BsInfoCircleFill/>
                                     <span className='mx-3'>Information du produit</span>
                                 </p>
-                                <p className='product-information-data'>
-                                    Cake Donut Original fourré crème cacao (14%) et enrobé au cacao (12%).Contenance : 5 x 48 g = 240 g.
-                                </p>
+                                <ul class="list-group list-group-flush">
+                                    {product.reference && <li class="list-group-item">{product.reference}</li>}
+                                    {product.ram &&  <li class="list-group-item">{product.ram}</li>}
+                                    {product.model &&  <li class="list-group-item">{product.model}</li>}
+                                    {product.details &&  <li class="list-group-item">{product.details}</li>}
+                                    {product.stockage &&  <li class="list-group-item">{product.stockage}</li> }
+                                    {product.processeur &&  <li class="list-group-item">{product.processeur}</li> }
+                                    {product.ecran &&  <li class="list-group-item">{product.ecran}</li>}
+                                    {product.autonomie &&  <li class="list-group-item">{product.autonomie}</li>}
+                                </ul>
                             </div>
                         </div>
                     </div>

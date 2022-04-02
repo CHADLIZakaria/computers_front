@@ -3,7 +3,7 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom'
 import './Navbar.scss'
 
-const Navbar = ({onClick}) => {
+const Navbar = () => {
 
     const navigate = useNavigate()
     
@@ -13,9 +13,6 @@ const Navbar = ({onClick}) => {
         <>
         {  <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <span style={{cursor: 'pointer'}}>
-                        <AiOutlineMenu onClick={onClick}/>
-                    </span>
                     <Link className="navbar-brand mx-3" to="/">Mehdi Computers</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>

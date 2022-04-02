@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import DataNotFound from '../../components/DataNotFound/DataNotFound'
+import Progress from '../../components/Progress/Porgress'
 import Table from '../../components/Table/Table'
 import Title from '../../components/Title/Title'
 import ProductService from '../../service/ProductService'
-import Progress from '../../components/Progress/Porgress'
-import Pagination from '../../components/Pagination/Pagination'
 
 const Products = () => {
     const [products, setProducts] = useState([])
@@ -23,9 +22,9 @@ const Products = () => {
             })
     }, [isLoading])
 
-    // const deleteCategeory = (id) => {
-    //     CategoryService.deleteCategoryById(id).then(() => setCategories(categories.filter(category => category.id != id)))
-    // }
+    const deleteProduct = (id) => {
+        ProductService.deleteById(id).then(() => setProducts(products.filter(product => product.id != id)))
+    }
     
     return (
         <div>
@@ -57,7 +56,7 @@ const Products = () => {
                     <Progress />
                     : 
                     products.length !== 0 ?
-                        <Table data={products} />
+                        <Table data={products} onDelete={deleteProduct}/>
                         :
                         <DataNotFound />    
             }  

@@ -13,7 +13,7 @@ const Layout = ({children}) => {
 
     return (
         <>
-            <Navbar onToggleShowUserInfo={() => setShowUserInfo(!showUserInfo)} showUserInfo={showUserInfo}/>
+            <Navbar />
             <div className='d-flex' onClick={() => setShowUserInfo(false)}>
                 <div className='wrapper-content w-100'>
                     {children}
