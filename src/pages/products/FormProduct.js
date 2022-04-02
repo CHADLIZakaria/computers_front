@@ -30,7 +30,7 @@ const FormProduct = () => {
                                     hdd: '',
                                     ssd:'',
                                     processeur: '',
-                                    quantite: 0,
+                                    quantite: 1,
                                     ecran: '',
                                     systeme_exploitation: '',
                                     autonomie: '',
@@ -44,7 +44,6 @@ const FormProduct = () => {
                         return errors
                     }}
                     onSubmit={(values) => {
-                        console.log(values)
                         ProductService.saveProduct(values)
                         navigate('/products')
                     }}>
@@ -193,13 +192,11 @@ const FormProduct = () => {
                                                 <label className='col-form-label'>Quantité</label>
                                             </div>
                                             <div className='col-6'>
-                                                <Field as='select' name='quantite' className='form-select form-select-sm'>
-                                                    <option label="Quantité" />
-                                                    {[...Array(10).keys()].map(element => (
-                                                        <option value={element+1} label={element+1} />  
-                                                    ))}
-                                                
-                                                </Field>
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-text cursor-pointer" onClick={() => {if(values.quantite > 1) setFieldValue('quantite', values.quantite-1)}}>-</span>
+                                                    <Field type="text" class="form-control form-control-sm" name="quantite" />
+                                                    <span class="input-group-text cursor-pointer"  onClick={() => {setFieldValue('quantite', values.quantite+1)}}>+</span>
+                                                </div>
                                             </div>
                                             <div className='col-3'>
                                                 <ErrorMessage component="span" className='text-danger form-text' name='quantite'/>
