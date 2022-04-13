@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom'
 import Carousel from '../../components/Carousel/Carousel'
 import ProductService from '../../service/ProductService'
 import './Product.scss'
-import Progress from '../../components/Progress/Porgress'
+import MyProgress from '../../components/Progress/MyProgress'
+import { Box, Container, Flex, Image, ListItem, UnorderedList } from '@chakra-ui/react'
 
 const Product = () => {
 
@@ -27,10 +28,45 @@ const Product = () => {
   return (
     <>
         { isLoading ? 
-            <Progress />
+            <MyProgress />
             :
-            <>
-                <div className='row mt-5 product mb-5'>
+            <Container maxW='container.xl'>
+                <Flex my='5'>
+                    <Box 
+                        maxW='sm' 
+                        borderWidth='1px' 
+                        borderRadius='lg' 
+                        overflow='hidden'>
+                        <Image src={`http://localhost:8080/api/uploads/${product.image}`} />
+                    </Box>
+                    <Box p='6'>
+                        <Box
+                            mt='1'
+                            fontWeight='semibold'
+                            as='h4'
+                            lineHeight='tight'
+                            isTruncated>
+                            {product.title}
+                        </Box>
+                        <Box>
+                            {product.price} DH
+                        </Box>
+                        <Box>
+                            <UnorderedList>
+                                <ListItem>{product.mark}</ListItem>
+                                <ListItem>{product.model}</ListItem>
+                                <ListItem>{product.quantite}</ListItem>
+                                <ListItem>{product.hdd}</ListItem>
+                                <ListItem>{product.sdd}</ListItem>
+                                <ListItem>{product.processeur}</ListItem>
+                                <ListItem>{product.frequence}</ListItem>
+                                <ListItem>{product.autonomie}</ListItem>
+
+                            </UnorderedList>
+                        </Box>
+                    </Box>
+                </Flex>
+                {/* <div className='row mt-5 product mb-5'>
                     <div className='col-6 product-image'>
                         <img src={`http://localhost:8080/api/uploads/${product.image}`} className="img-thumbnail" />
                     </div>
@@ -59,9 +95,9 @@ const Product = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <Carousel data={products} />
-            </>
+            </Container>
 
         }
         

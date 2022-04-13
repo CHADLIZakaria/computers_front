@@ -1,16 +1,32 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik'
-import React, { useEffect, useState } from 'react'
-import { BsInfoCircleFill } from 'react-icons/bs'
+import { Box, Button, Container, Flex, FormControl, FormLabel, Input, List, ListItem } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import * as yup from 'yup'
 import ImagePreview from '../../components/ImagePreview/ImagePreview'
+import MyInput from '../../components/MyInput/MyInput'
+import MySelect from '../../components/MySelect/MySelect'
 import Title from '../../components/Title/Title'
-import CategoryService from '../../service/CategoryService'
 import ProductService from '../../service/ProductService'
-import noPhotos from './no-photos.png'
 
 const FormProduct = () => {
     const {id} = useParams()
     const navigate = useNavigate()
+    const productSchema=yup.object().shape({
+        title: yup.string().required("Required"),
+        description: yup.string().required("Required"),
+        mark: yup.string().required("Required"),
+        model: yup.string().required("Required"),
+        ram: yup.string().required("Required"),
+        reference: yup.string().required("Required"),
+        hdd: yup.string().required("Required"),
+        ssd: yup.string().required("Required"),
+        processeur: yup.string().required("Required"),
+        ecran: yup.string().required("Required"),
+        autonomie: yup.string().required("Required"),
+        frequence:  yup.string().required("Required"),
+    })
+
     useEffect(() => {
        
     }, [])
@@ -18,10 +34,9 @@ const FormProduct = () => {
     return (
         <>
             <Title title={"Add Products"} /> 
-            <div className='row'>
+            <Container maxW='container.xl'>
                 <Formik 
-                    initialValues={{ title: '', 
-                                    description: '', 
+                    initialValues={{ title: '',  
                                     price: 0, 
                                     mark: '',
                                     model: '',
@@ -33,252 +48,85 @@ const FormProduct = () => {
                                     quantite: 1,
                                     ecran: '',
                                     systeme_exploitation: '',
+                                    frequence: '',
                                     autonomie: '',
                                     file: null, }} 
                     enableReinitialize={true}
-                    validate={(values) => {
-                        const errors = {}
-                        if(!values.title) {
-                            errors.title="Name is required"
-                        }
-                        return errors
-                    }}
                     onSubmit={(values) => {
+                        console.log(values)
                         ProductService.saveProduct(values)
                         navigate('/products')
                     }}>
-                        {({values, setFieldValue}) => (
+                        {({values, setFieldValue, handleChange}) => (
                             <>
-                                <Form className='col-12'>
-                                    <div className='row'>
-                                        {/* Titre */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Titre</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="title"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='name'/>
-                                            </div>
-                                        </div>
-                                        {/* Prix */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Prix</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <div class="input-group input-group">
-                                                    <Field type="text" name="price"  className='form-control form-control-sm' />
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">DH</span>
-                                                </div>
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='description'/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                         {/* Mark */}
-                                        <div className='row align-items-center col-6'>
-                                                <div className='col-3'>
-                                                    <label className='col-form-label'>Mark</label>
-                                                </div>
-                                                <div className='col-6'>
-                                                    <Field as='select' name='mark' className='form-select form-select-sm'>
-                                                        <option label="Selectionnez la marque" />
-                                                        <option value="HP" label="HP" />  
-                                                    </Field>
-                                                </div>
-                                                <div className='col-3'>
-                                                    <ErrorMessage component="span" className='text-danger form-text' name='mark'/>
-                                                </div>
-                                        </div>
-                                        {/* Image */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Image</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <input type="file"  className='form-control form-control-sm' onChange={(e) => {
+                                <Form>
+                                    <Flex>
+                                        <MyInput id='title' label='Title' onChange={handleChange} />
+                                        <MyInput id='mark' label='Mark' onChange={handleChange} />
+                                    </Flex>
+                                    <Flex mt='2'>
+                                        <MyInput id='model' label='Model' onChange={handleChange} />
+                                        <FormControl isRequired mr='5' >
+                                            <FormLabel htmlFor='file' fontSize='12px'>File</FormLabel>
+                                            <Input size='sm' name='file' type="file"  onChange={(e) => {
                                                     setFieldValue('file', e.currentTarget.files[0])
                                                 }}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        {/* Model */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Model</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="model"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='model'/>
-                                            </div>
-                                        </div>
-                                        {/* Ram */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Ram</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field as='select' name='ram' className='form-select form-select-sm'>
-                                                    <option label="RAM" />
-                                                    <option value="2Go" label="2Go" />  
-                                                    <option value="4Go" label="4Go" />  
-                                                    <option value="6Go" label="6Go" />  
-                                                    <option value="8Go" label="8Go" />  
-                                                    <option value="16Go" label="16Go" />
-                                                    <option value="32Go" label="32Go" />  
-                                                </Field>
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='reference'/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        {/* Reference */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Réference</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="reference"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='reference'/>
-                                            </div>
-                                        </div>
-                                        {/* Stockage HDD */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Stockage HDD</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field as='select' name='hdd' className='form-select form-select-sm'>
-                                                    <option label="Stockage HDD" />
-                                                    <option value="128 Go" label="128Go" />  
-                                                    <option value="512 Go" label="512Go" />  
-                                                    <option value="1 To" label="1To" />  
-                                                    <option value="2 To" label="2To" />   
-                                                </Field>
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='stockage'/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        {/* Processeur */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Processeur</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="processeur"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='processeur'/>
-                                            </div>
-                                        </div>
-                                        {/* Qauntite */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Quantité</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <div class="input-group input-group-sm">
-                                                    <span class="input-group-text cursor-pointer" onClick={() => {if(values.quantite > 1) setFieldValue('quantite', values.quantite-1)}}>-</span>
-                                                    <Field type="text" class="form-control form-control-sm" name="quantite" />
-                                                    <span class="input-group-text cursor-pointer"  onClick={() => {setFieldValue('quantite', values.quantite+1)}}>+</span>
-                                                </div>
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='quantite'/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        {/* Ecran */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Ecran</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="ecran"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='ecran'/>
-                                            </div>
-                                        </div>
-                                         {/* Stockage SDD */}
-                                         <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Stockage SDD</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field as='select' name='ssd' className='form-select form-select-sm'>
-                                                    <option label="Stockage SDD" />
-                                                    <option value="128 Go" label="128Go" />  
-                                                    <option value="512 Go" label="512Go" />  
-                                                    <option value="1 To" label="1To" />  
-                                                    <option value="2 To" label="2To" />   
-                                                </Field>
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='stockage'/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        {/* Fréquence */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Fréquence</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="frequence"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='frequence'/>
-                                            </div>
-                                        </div>
-                                        {/* Autonomie */}
-                                        <div className='row align-items-center col-6'>
-                                            <div className='col-3'>
-                                                <label className='col-form-label'>Autonomie</label>
-                                            </div>
-                                            <div className='col-6'>
-                                                <Field type="text" name="autonomie"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='autonomie'/>
-                                            </div>
-                                        </div>      
-                                    </div>
-                                    <div className='row'>
-                                         {/* Système d'exploitation */}
-                                         <div className='row align-items-center col-6'>
-                                            <div className='col-5'>
-                                                <label className='col-form-label'>Système d’exploitation</label>
-                                            </div>
-                                            <div className='col-4'>
-                                                <Field type="text" name="systeme_exploitation"  className='form-control form-control-sm' />
-                                            </div>
-                                            <div className='col-3'>
-                                                <ErrorMessage component="span" className='text-danger form-text' name='systeme_exploitation'/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                                                  
-                                    <button className="btn btn-primary" type="submit">Enregistrer</button>
+                                        </FormControl>
+                                    </Flex>
+                                    <Flex mt='2'>
+                                        <MyInput id='reference' label='Référence' onChange={handleChange} />
+                                        <MySelect id='ram' label='Ram' data={['2 Go' ,'4 Go', '6 Go', '8 Go',  '16 Go', '32 Go']} onChange={handleChange} />
+                                    </Flex>
+                                    <Flex mt='2'>
+                                        <MyInput id='processeur' label='Processeur' onChange={handleChange} />
+                                        <MySelect id='hdd' label='Stockage HDD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} />
+                                    </Flex>
+                                    <Flex mt='2'>
+                                        <MyInput id='price' label='Prix' onChange={handleChange} />
+                                        <MySelect id='ssd' label='Stockage SSD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} />
+                                    
+                                    </Flex>
+                                    <Flex mt='2'>
+                                        <MyInput id='ecran' label='Ecran' onChange={handleChange} />
+                                        <MyInput id='frequence' name='frequence' label='Fréquence' onChange={handleChange} />
+                                    </Flex>
+                                    <Flex mt='2'>
+                                        <MyInput id='quantite' name='quantite' label='Quantité' onChange={handleChange} />
+                                        <MyInput id='systeme_expolitation' label='Système Exploitation' onChange={handleChange} />
+                                    </Flex>
+                                    <Flex mt='2' w='50%'>
+                                        <MyInput id='autonomie' label='Autonomie' onChange={handleChange} />
+                                    </Flex>
+                                    <Button colorScheme='teal' type="submit" my='4'>Ajouter</Button>
                                 </Form>
-                                <div className='row col-12 my-3'>
+                                    <Flex>
+                                        <Box p='6' boxShadow='xs'>
+                                            {values.file && 
+                                                <ImagePreview file={values.file} /> 
+                                            }
+                                        </Box>
+                                        <Box p='6'>
+                                           <List spacing={3}>
+                                                {values.title &&  <ListItem>{values.title} </ListItem> }
+                                                {values.mark &&  <ListItem>{values.mark} </ListItem> }
+                                                {values.reference &&  <ListItem>{values.reference} </ListItem> }
+                                                {values.ecran &&  <ListItem>{values.ecran} </ListItem> }
+                                                {values.ram &&  <ListItem>{values.ram} </ListItem>  }
+                                                {values.processeur && <ListItem>{values.processeur} </ListItem> }
+                                                {values.hdd &&  <ListItem>{values.hdd} </ListItem>  }
+                                                {values.price &&  <ListItem>{values.price} DH</ListItem>  }
+                                                {values.ssd &&  <ListItem>{values.ssd} </ListItem>  }
+                                                {values.frequence && <ListItem>{values.frequence} </ListItem> }
+                                                {values.quantite && <ListItem>{values.quantite} </ListItem> }
+                                                {values.stockage && <ListItem>{values.stockage} </ListItem> }
+                                                {values.autonomie && <ListItem>{values.autonomie} </ListItem> }
+                                                {values.model && <ListItem>{values.model} </ListItem> }
+                                            </List>
+                                        </Box>
+                                    </Flex>
+                                   
+                              
+                                {/* <div className='row col-12 my-3'>
                                     <div className='col-4 product-image'>
                                         {values.file ? 
                                             <ImagePreview file={values.file} /> :
@@ -299,23 +147,24 @@ const FormProduct = () => {
                                                     <span className='mx-3'>Information du produit</span>
                                                 </p>
                                                 <ul class="list-group list-group-flush">
-                                                   {values.reference && <li class="list-group-item">{values.reference}</li>}
-                                                   {values.ram &&  <li class="list-group-item">{values.ram}</li>}
-                                                   {values.model &&  <li class="list-group-item">{values.model}</li>}
-                                                   {values.details &&  <li class="list-group-item">{values.details}</li>}
-                                                   {values.stockage &&  <li class="list-group-item">{values.stockage}</li> }
-                                                   {values.processeur &&  <li class="list-group-item">{values.processeur}</li> }
-                                                   {values.ecran &&  <li class="list-group-item">{values.ecran}</li>}
-                                                   {values.autonomie &&  <li class="list-group-item">{values.autonomie}</li>}
+                                                    {values.reference && <li class="list-group-item">{values.reference}</li>}
+                                                    {values.ram &&  <li class="list-group-item">{values.ram}</li>}
+                                                    {values.model &&  <li class="list-group-item">{values.model}</li>}
+                                                    {values.details &&  <li class="list-group-item">{values.details}</li>}
+                                                    {values.stockage &&  <li class="list-group-item">{values.stockage}</li> }
+                                                    {values.processeur &&  <li class="list-group-item">{values.processeur}</li> }
+                                                    {values.ecran &&  <li class="list-group-item">{values.ecran}</li>}
+                                                    {values.autonomie &&  <li class="list-group-item">{values.autonomie}</li>}
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </>  
                         )}
                 </Formik>
-            </div>
+            </Container>
+           
         </>
     )
 }
