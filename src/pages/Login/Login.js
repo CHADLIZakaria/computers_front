@@ -1,16 +1,18 @@
 import { Button, Flex, Heading, Input, InputGroup, InputLeftElement, InputRightElement, Stack } from '@chakra-ui/react'
 import axios from 'axios'
 import { Formik, Form } from 'formik'
-import React from 'react'
+import React, { useContext } from 'react'
 import { AiFillLock, AiOutlineEye, AiOutlineUser } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
+import { ShopContext } from '../../ApplicationContext'
 
 const Login = () => {
     const navigate = useNavigate()
+    const {authUser, setAuthUser, rolesUser, setRolesUser} = useContext(ShopContext)
     return (
         <Flex
             flexDirection='column'
-            h={`calc( 100vh - 56px)`}
+            h={`calc( 100vh - 56px)`}                               
             backgroundColor='gray.200'
             justifyContent='center'
             alignItems='center'
@@ -21,7 +23,7 @@ const Login = () => {
                 borderRadius='10px' 
                 flexDirection='column'
                 h='50vh'>
-            <Heading textAlign="center" as="h5" size='lg' my='5'>Authentification</Heading>
+                <Heading textAlign="center" as="h5" size='lg' my='5'>Authentification</Heading>
                 <Stack spacing={4}>
                     <Formik 
                     initialValues={{ username: '',  
@@ -37,10 +39,13 @@ const Login = () => {
                                     let access_token = value.data.access_token
                                     let jwtData = access_token.split('.')[1]
                                     let decodeJwtJsonData = window.atob(jwtData)
-                                    if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
-                                        localStorage.setItem("user", access_token)
-                                        navigate('/admin/products')
-                                    }
+                                    let roles = JSON.parse(decodeJwtJsonData).roles
+                                    console.log(roles)
+                                    setRolesUser(roles)
+                                    localStorage.setItem("user", access_token)
+                                    setAuthUser(access_token)
+                                    console.log(authUser)
+                                    //  navigate('/admin/products')
                                 }).catch(error => console.log(error))
                         }}>
                             {({values, setFieldValue, handleChange}) => ( 
@@ -84,6 +89,7 @@ const Login = () => {
                                         >
                                         Connexion
                                     </Button>
+                                    
                                 </Form>
                             )}
                         

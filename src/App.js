@@ -5,14 +5,19 @@ import FormProduct from './pages/products/FormProduct';
 import Product from './pages/products/Product';
 import Products from './pages/products/products';
 import Home from './pages/Home/Home';
-import {ShopProvider} from './ApplicationContext'
+import {ShopContext, ShopProvider} from './ApplicationContext'
 import Layout from './components/Layout'
+import { useContext, useEffect } from "react";
+import AuthenticationService from "./service/AuthenticationService";
 
 
 function App() {
+  
+  
+
   return (
-      <Router>
-        <ShopProvider>
+      <ShopProvider>
+        <Router>
               <Navbar />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -22,17 +27,17 @@ function App() {
                 <Route path="/product/:id" element={<Product />} />
                 <Route path="/products/save" element={<FormProduct />} />
               </Routes>
-          </ShopProvider>
-          
-      </Router>
+          </Router>
+        
+      </ShopProvider>
   );
 }
 
-const ProtectRoute = ({
-  user,
+const ProtectedRoute = ({
+  
   children,
 }) => {
-  if(!user) {
+  if(localStorage.getItem('user') != null) {
     return <Navigate to='/admin' />
   }
   else {

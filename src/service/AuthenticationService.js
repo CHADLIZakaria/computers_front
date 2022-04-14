@@ -13,12 +13,13 @@ class AuthentificationService {
             return value.data;
         })
     }
+    
     logout() {
         localStorage.removeItem("user")
     }
-   
-    getCurrentUser() {
-        return localStorage.getItem('user');;
+
+    setCurrentUser() {
+        
     }
 }
 export default new AuthentificationService()
