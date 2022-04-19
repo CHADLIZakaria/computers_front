@@ -16,8 +16,6 @@ const Layout = ({children}) => {
             setRolesUser(roles)
             localStorage.setItem("user", access_token)
             setAuthUser(access_token)
-            console.log(roles)
-            console.log(authUser)
         }
     }, [])
     

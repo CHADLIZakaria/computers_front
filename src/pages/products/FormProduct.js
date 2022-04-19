@@ -1,6 +1,6 @@
 import { Box, Button, Container, Flex, FormControl, FormLabel, Input, List, ListItem } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import ImagePreview from '../../components/ImagePreview/ImagePreview'
@@ -8,9 +8,11 @@ import MyInput from '../../components/MyInput/MyInput'
 import MySelect from '../../components/MySelect/MySelect'
 import Title from '../../components/Title/Title'
 import ProductService from '../../service/ProductService'
+import RamsService from '../../service/RamsService'
 
 const FormProduct = () => {
     const {id} = useParams()
+    const [rams, setRams] = useState([])
     const navigate = useNavigate()
     const productSchema=yup.object().shape({
         title: yup.string().required("Required"),
@@ -28,6 +30,13 @@ const FormProduct = () => {
     })
 
     useEffect(() => {
+        RamsService.findAll().then(data => {
+           setRams(data.data);
+           console.log(data.data.map(ram => {
+               return ram.id;
+           }
+           ));
+        })
        
     }, [])
     
@@ -53,7 +62,6 @@ const FormProduct = () => {
                                     file: null, }} 
                     enableReinitialize={true}
                     onSubmit={(values) => {
-                        console.log(values)
                         ProductService.saveProduct(values)
                         navigate('/products')
                     }}>
@@ -61,7 +69,7 @@ const FormProduct = () => {
                             <>
                                 <Form>
                                     <Flex>
-                                        <MyInput id='title' label='Title' onChange={handleChange} />
+                                        <MyInput id='model' label='Model' onChange={handleChange} />
                                         <MyInput id='mark' label='Mark' onChange={handleChange} />
                                     </Flex>
                                     <Flex mt='2'>
@@ -75,15 +83,20 @@ const FormProduct = () => {
                                     </Flex>
                                     <Flex mt='2'>
                                         <MyInput id='reference' label='Référence' onChange={handleChange} />
-                                        <MySelect id='ram' label='Ram' data={['2 Go' ,'4 Go', '6 Go', '8 Go',  '16 Go', '32 Go']} onChange={handleChange} />
+                                        <MySelect 
+                                            id='ram' 
+                                            label='Ram'
+                                            keys={rams.map(ram => ram.id)} 
+                                            values={rams.map(ram => ram.ram)} 
+                                            onChange={handleChange} />
                                     </Flex>
                                     <Flex mt='2'>
                                         <MyInput id='processeur' label='Processeur' onChange={handleChange} />
-                                        <MySelect id='hdd' label='Stockage HDD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} />
+                                        {/* <MySelect id='hdd' label='Stockage HDD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} /> */}
                                     </Flex>
                                     <Flex mt='2'>
                                         <MyInput id='price' label='Prix' onChange={handleChange} />
-                                        <MySelect id='ssd' label='Stockage SSD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} />
+                                        {/* <MySelect id='ssd' label='Stockage SSD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} /> */}
                                     
                                     </Flex>
                                     <Flex mt='2'>

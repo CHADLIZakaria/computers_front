@@ -8,7 +8,7 @@ import { ShopContext } from '../../ApplicationContext'
 
 const Login = () => {
     const navigate = useNavigate()
-    const {authUser, setAuthUser, rolesUser, setRolesUser} = useContext(ShopContext)
+    const {authUser, setAuthUser, isAdmin, setIsAdmin} = useContext(ShopContext)
     return (
         <Flex
             flexDirection='column'
@@ -30,23 +30,26 @@ const Login = () => {
                                     password: ''}} 
                         enableReinitialize={true}
                         onSubmit={(values) => {
-                            const formData = new FormData()
-                            console.log(values)
-                            formData.append('username', values.username)
-                            formData.append('password', values.password)
-                            axios.post('http://localhost:8080/api/login', formData)
+                            axios.post(
+                                'http://localhost:8080/api/login', 
+                                {
+                                    username: values.username,
+                                    password: values.password
+                                })
                                 .then(value => {
-                                    let access_token = value.data.access_token
+                                    let access_token = value.data.data.access_token
                                     let jwtData = access_token.split('.')[1]
                                     let decodeJwtJsonData = window.atob(jwtData)
-                                    let roles = JSON.parse(decodeJwtJsonData).roles
-                                    console.log(roles)
-                                    setRolesUser(roles)
                                     localStorage.setItem("user", access_token)
                                     setAuthUser(access_token)
-                                    console.log(authUser)
-                                    //  navigate('/admin/products')
-                                }).catch(error => console.log(error))
+                                    if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
+                                        setIsAdmin(true)
+                                      
+                                    }  
+                                    navigate('/products')
+                                })
+                                .catch(error => 
+                                    console.log(error))
                         }}>
                             {({values, setFieldValue, handleChange}) => ( 
                                 <Form>

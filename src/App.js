@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
 import FormProduct from './pages/products/FormProduct';
@@ -9,12 +9,12 @@ import {ShopContext, ShopProvider} from './ApplicationContext'
 import Layout from './components/Layout'
 import { useContext, useEffect } from "react";
 import AuthenticationService from "./service/AuthenticationService";
+import Rams from "./pages/rams/rams";
 
 
 function App() {
   
   
-
   return (
       <ShopProvider>
         <Router>
@@ -22,28 +22,32 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/admin"  exact element={<Login /> } />
-                <Route path="/admin/products" element={<Products />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/product/:id" element={<Product />} />
-                <Route path="/products/save" element={<FormProduct />} />
+                <Route element={<ProtectedRoute  />}>
+                  <Route path="/rams" element={<Rams />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/product/:id" element={<Product />} />
+                  <Route path="/products/save" element={<FormProduct />} />
+                </Route>
               </Routes>
           </Router>
-        
       </ShopProvider>
   );
 }
 
 const ProtectedRoute = ({
-  
-  children,
+  children
 }) => {
-  if(localStorage.getItem('user') != null) {
-    return <Navigate to='/admin' />
+  let isAuth = false;
+  let access_token = localStorage.getItem('user')
+  if(access_token) {
+    let jwtData = access_token.split('.')[1]
+    let decodeJwtJsonData = window.atob(jwtData)
+    if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
+      isAuth = true;
+      return  children ? children : <Outlet />;
+    }
   }
-  else {
-    return children;
-  }
-
+  return <Navigate to="/" replace />
 
 } 
 
