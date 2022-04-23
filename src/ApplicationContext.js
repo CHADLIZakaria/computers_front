@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import axiosConfig from './axiosConfig'
 
 export const ShopContext = createContext()
 
@@ -16,6 +17,7 @@ export const ShopProvider = props => {
             let decodeJwtJsonData = window.atob(jwtData)
             if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
                 setIsAdmin(true)
+                axiosConfig.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('user');
             }
             else {
                 setIsAdmin(false)

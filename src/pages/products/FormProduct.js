@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, FormControl, FormLabel, Input, List, ListItem } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, FormControl, FormLabel, IconButton, Input, List, ListItem } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -9,6 +9,7 @@ import MySelect from '../../components/MySelect/MySelect'
 import Title from '../../components/Title/Title'
 import ProductService from '../../service/ProductService'
 import RamsService from '../../service/RamsService'
+import { FiSettings } from "react-icons/fi";
 
 const FormProduct = () => {
     const {id} = useParams()
@@ -31,13 +32,8 @@ const FormProduct = () => {
 
     useEffect(() => {
         RamsService.findAll().then(data => {
-           setRams(data.data);
-           console.log(data.data.map(ram => {
-               return ram.id;
-           }
-           ));
+            setRams(data.data);
         })
-       
     }, [])
     
     return (
@@ -81,14 +77,26 @@ const FormProduct = () => {
                                                 }}/>
                                         </FormControl>
                                     </Flex>
-                                    <Flex mt='2'>
-                                        <MyInput id='reference' label='Référence' onChange={handleChange} />
-                                        <MySelect 
-                                            id='ram' 
-                                            label='Ram'
-                                            keys={rams.map(ram => ram.id)} 
-                                            values={rams.map(ram => ram.ram)} 
-                                            onChange={handleChange} />
+                                    <Flex mt='2' >
+                                        <Flex flex='1'>
+                                            <MyInput id='reference' label='Référence' onChange={handleChange} />
+                                        </Flex>
+                                        <Flex flex='1' alignItems='end'>
+                                            <MySelect 
+                                                id='ram' 
+                                                label='Ram'
+                                                keys={rams.map(ram => ram.id)} 
+                                                values={rams.map(ram => ram.ram)} 
+                                                onChange={handleChange} />
+                                            <IconButton 
+                                                icon={<FiSettings />}
+                                                onClick={() => {
+                                                    console.log('hi');
+                                                } 
+                                            }
+                                            />
+                                        </Flex>
+                                        
                                     </Flex>
                                     <Flex mt='2'>
                                         <MyInput id='processeur' label='Processeur' onChange={handleChange} />
@@ -104,7 +112,6 @@ const FormProduct = () => {
                                         <MyInput id='frequence' name='frequence' label='Fréquence' onChange={handleChange} />
                                     </Flex>
                                     <Flex mt='2'>
-                                        <MyInput id='quantite' name='quantite' label='Quantité' onChange={handleChange} />
                                         <MyInput id='systeme_expolitation' label='Système Exploitation' onChange={handleChange} />
                                     </Flex>
                                     <Flex mt='2' w='50%'>

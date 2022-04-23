@@ -44,6 +44,7 @@ const ProtectedRoute = ({
     let decodeJwtJsonData = window.atob(jwtData)
     if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
       isAuth = true;
+      
       return  children ? children : <Outlet />;
     }
   }

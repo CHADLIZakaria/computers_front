@@ -30,10 +30,10 @@ const Home = () => {
     
     return (
         <>
-            <Collapse  in={!isOpen}>
-                <Box className='home-overlay' pos='absolute' top='0' w='100%' h={`100vh`} zIndex='-1'>
+            <Box>
+                <Box className='home-overlay' pos='absolute' top='0' w='100%' h={`50vh`} zIndex='-1'>
                 </Box>
-                <Box  h={`calc(100vh - 66px)`} bg='grey.700' w='100%' pos="relative">
+                <Box  h={`calc(50vh - 66px)`} bg='grey.700' w='100%' pos="relative">
                     <Box 
                         pos='absolute' 
                         color='white' 
@@ -59,8 +59,8 @@ const Home = () => {
                         </Flex>
                     </Box>
                 </Box>
-            </Collapse>
-            <Collapse  in={isOpen}>
+            </Box>
+            <Box>
                 <Title title='Mehdi Computers' />
                 {isLoading ? 
                     <MyProgress />
@@ -99,7 +99,7 @@ const Home = () => {
                         </Container>
                     </>
                 }
-           </Collapse>  
+           </Box>  
         </>
     )
 }

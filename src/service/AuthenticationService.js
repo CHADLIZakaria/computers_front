@@ -18,8 +18,5 @@ class AuthentificationService {
         localStorage.removeItem("user")
     }
 
-    setCurrentUser() {
-        
-    }
 }
 export default new AuthentificationService()
