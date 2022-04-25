@@ -5,6 +5,7 @@ import React, { useContext } from 'react'
 import { AiFillLock, AiOutlineEye, AiOutlineUser } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { ShopContext } from '../../ApplicationContext'
+import axiosConfig from '../../axiosConfig'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -30,8 +31,8 @@ const Login = () => {
                                     password: ''}} 
                         enableReinitialize={true}
                         onSubmit={(values) => {
-                            axios.post(
-                                'http://localhost:8080/api/login', 
+                            axiosConfig.post(
+                                '/login', 
                                 {
                                     username: values.username,
                                     password: values.password
@@ -43,8 +44,8 @@ const Login = () => {
                                     localStorage.setItem("user", access_token)
                                     setAuthUser(access_token)
                                     if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
+                                        axiosConfig.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('user')
                                         setIsAdmin(true)
-                                      
                                     }  
                                     navigate('/products')
                                 })
@@ -85,11 +86,7 @@ const Login = () => {
                                     <Button 
                                         w='fit-content'  
                                         colorScheme='blue'
-                                        type='submit'
-                                        onClick={() => {
-                                            
-                                        }}
-                                        >
+                                        type='submit'>
                                         Connexion
                                     </Button>
                                     

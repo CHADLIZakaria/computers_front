@@ -57,15 +57,16 @@ const FormProduct = () => {
                                     autonomie: '',
                                     file: null, }} 
                     enableReinitialize={true}
+                    validationSchema={productSchema}
                     onSubmit={(values) => {
                         ProductService.saveProduct(values)
                         navigate('/products')
                     }}>
-                        {({values, setFieldValue, handleChange}) => (
+                        {({values, setFieldValue, handleChange, errors}) => (
                             <>
                                 <Form>
                                     <Flex>
-                                        <MyInput id='model' label='Model' onChange={handleChange} />
+                                        <MyInput id='model' label='Model' onChange={handleChange} error={errors.model} />
                                         <MyInput id='mark' label='Mark' onChange={handleChange} />
                                     </Flex>
                                     <Flex mt='2'>

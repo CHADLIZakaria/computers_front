@@ -21,8 +21,9 @@ const Navbar = () => {
             boxShadow='xl' 
             p='3' 
             rounded='md' 
-            bg='white' 
+            bg='transparent' 
             opacity='.95' 
+            color='white'
             borderRadius='0' >
             {isAdmin && 
                 <>

@@ -13,8 +13,6 @@ import Rams from "./pages/rams/rams";
 
 
 function App() {
-  
-  
   return (
       <ShopProvider>
         <Router>

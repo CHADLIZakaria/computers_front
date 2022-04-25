@@ -1,9 +1,9 @@
 import axios from "axios";
-import CategoryService from "./CategoryService";
+import axiosConfig from '../axiosConfig'
 
 class ProductService {
     findAll(page) {
-        return axios.get(`http://localhost:8080/api/products?page=${page}`).then(value => value.data).catch(e => console.log(e))
+        return axiosConfig.get(`/products?page=${page}`).then(value => value.data).catch(e => console.log(e))
     }
 
     findById(id) {
@@ -14,7 +14,7 @@ class ProductService {
         return axios.get(`http://localhost:8080/api/category/${categoryName}/products`).then(value => value.data).catch(e => console.log(e))       
     }
     deleteById(id) {
-       return axios.delete(`http://localhost:8080/api/products/${id}`)
+       return axiosConfig.delete(`/admin/api/products/${id}`)
     }
 
     async saveProduct(product) {
@@ -33,7 +33,7 @@ class ProductService {
         formData.append('systeme_exploitation', product.systeme_exploitation)
         formData.append('autonomie', product.autonomie)
         formData.append('file', product.file)
-        axios.post('http://localhost:8080/api/products/save', 
+        axiosConfig.post('/admin/products/save', 
             formData,
         ).then(value => console.log(value))
     }
