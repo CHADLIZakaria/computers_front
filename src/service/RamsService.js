@@ -5,6 +5,7 @@ class RamsService {
     async findAll() {
         try {
             const value = await axiosConfig.get(`/admin/rams`);
+            console.log(value.data)
             return value.data;
         } catch (e) {
             return console.log(e);

@@ -58,9 +58,9 @@ const Products = () => {
                                         <Td>
                                             {index+1}
                                         </Td>
-                                        <Td>
-                                            {product.ram}
-                                        </Td>
+                                            <Td>
+                                                {product.ram}
+                                            </Td>
                                         <Td>
                                             <IconButton icon={<AiOutlineEdit />} colorScheme='blue' mr='1' onClick={() => navigate(`/product//edit`)}></IconButton>
                                             <IconButton 

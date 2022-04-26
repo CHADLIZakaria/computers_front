@@ -1,18 +1,28 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, Text } from '@chakra-ui/react'
+import { Box, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Text } from '@chakra-ui/react'
 import React from 'react'
 
 const MyInput = ({id, label, onChange, error}) => {
   return (
-    <FormControl variant='floating' mr='5'  >
-        <FormLabel htmlFor={id} fontSize='12px' display='flex' gap='3px'>
-            {label} 
-            <Text color='red'>
-              *
-            </Text>
+      <FormControl variant='floating'>
+        <Input 
+          size='sm' 
+          name={id} 
+          id={id} 
+          placeholder=' ' 
+          onChange={onChange} 
+          borderColor={error && 'red'} />
+        <FormLabel 
+          position='absolute'
+          top='0'
+          left='0'
+          zIndex='2'
+          transformOrigin='left top'
+          transform='scale(0.85) translateY(-24px)'
+          >
+             {label}
         </FormLabel>
-        <Input size='sm' name={id} id={id} placeholder={`Entrer ${label}`}  onChange={onChange} borderColor={error && 'red'} />
-        {error && <Text color='red' fontSize='xs'>{error}</Text>}
-    </FormControl>
+        {error && <FormErrorMessage fontSize='xs'>{error}</FormErrorMessage>}
+      </FormControl>
   )
 }
 

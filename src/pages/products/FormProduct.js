@@ -14,6 +14,7 @@ import { FiSettings } from "react-icons/fi";
 const FormProduct = () => {
     const {id} = useParams()
     const [rams, setRams] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate()
     const productSchema=yup.object().shape({
         title: yup.string().required("Required"),
@@ -33,8 +34,9 @@ const FormProduct = () => {
     useEffect(() => {
         RamsService.findAll().then(data => {
             setRams(data.data);
+            setIsLoading(false)
         })
-    }, [])
+    }, [isLoading])
     
     return (
         <>
@@ -64,123 +66,120 @@ const FormProduct = () => {
                     }}>
                         {({values, setFieldValue, handleChange, errors}) => (
                             <>
-                                <Form>
-                                    <Flex>
-                                        <MyInput id='model' label='Model' onChange={handleChange} error={errors.model} />
-                                        <MyInput id='mark' label='Mark' onChange={handleChange} />
-                                    </Flex>
-                                    <Flex mt='2'>
-                                        <MyInput id='model' label='Model' onChange={handleChange} />
-                                        <FormControl isRequired mr='5' >
-                                            <FormLabel htmlFor='file' fontSize='12px'>File</FormLabel>
-                                            <Input size='sm' name='file' type="file"  onChange={(e) => {
-                                                    setFieldValue('file', e.currentTarget.files[0])
-                                                }}/>
-                                        </FormControl>
-                                    </Flex>
-                                    <Flex mt='2' >
-                                        <Flex flex='1'>
+                                {!isLoading && 
+                                     <Form>
+                                        <Flex gap='8'>
+                                            <MyInput id='model' label='Model' onChange={handleChange} error={errors.model} />
+                                            <MyInput id='mark' label='Mark' onChange={handleChange} error={errors.mark} />
+                                        </Flex>
+                                        <Flex mt='6' gap='8'>
                                             <MyInput id='reference' label='Référence' onChange={handleChange} />
+                                            <FormControl variant='floating'>
+                                            <FormLabel 
+                                                htmlFor={id} 
+                                                position='absolute'
+                                                top='0'
+                                                left='0'
+                                                zIndex='2'
+                                                transformOrigin='left top'
+                                                transform='scale(0.85) translateY(-24px)'>
+                                                    Image
+                                                </FormLabel>
+                                                <Input size='sm' name='file' type="file"  onChange={(e) => {
+                                                        setFieldValue('file', e.currentTarget.files[0])
+                                                    }}/>
+                                            </FormControl>
                                         </Flex>
-                                        <Flex flex='1' alignItems='end'>
+                                        <Flex mt='6' gap='8'>
+                                            <Flex flex='1'>
+                                                <MyInput id='processeur' label='Processeur' onChange={handleChange} />
+                                            </Flex>
+                                            <Flex flex='1' alignItems='end'>
+                                                <MySelect 
+                                                    id='ram' 
+                                                    label='Ram'
+                                                    keys={rams.map(ram => ram.id)} 
+                                                    values={rams.map(ram => ram.ram)} 
+                                                    onChange={handleChange} />
+                                                <IconButton 
+                                                size='sm'
+                                                    icon={<FiSettings />}
+                                                    onClick={() => {
+                                                       
+                                                    } 
+                                                }
+                                                />
+                                            </Flex>
+                                            
+                                        </Flex>
+                                        <Flex mt='6' gap='8'>
+                                            <MyInput id='price' label='Prix' onChange={handleChange} />
                                             <MySelect 
-                                                id='ram' 
-                                                label='Ram'
-                                                keys={rams.map(ram => ram.id)} 
-                                                values={rams.map(ram => ram.ram)} 
+                                                id='hdd' 
+                                                label='Stockage HDD' 
+                                                keys={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                                values={['128 Go' ,'512 Go', '1 To', '2 To']} 
                                                 onChange={handleChange} />
-                                            <IconButton 
-                                                icon={<FiSettings />}
-                                                onClick={() => {
-                                                    console.log('hi');
-                                                } 
-                                            }
-                                            />
                                         </Flex>
+                                        <Flex mt='6' gap='8'>
+                                            <MyInput 
+                                                id='ecran' 
+                                                label='Ecran' 
+                                                onChange={handleChange} />
+                                            <MySelect 
+                                                id='ssd' 
+                                                label='Stockage SSD' 
+                                                keys={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                                values={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                                onChange={handleChange} />
                                         
-                                    </Flex>
-                                    <Flex mt='2'>
-                                        <MyInput id='processeur' label='Processeur' onChange={handleChange} />
-                                        {/* <MySelect id='hdd' label='Stockage HDD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} /> */}
-                                    </Flex>
-                                    <Flex mt='2'>
-                                        <MyInput id='price' label='Prix' onChange={handleChange} />
-                                        {/* <MySelect id='ssd' label='Stockage SSD' data={['128 Go' ,'512 Go', '1 To', '2 To']} onChange={handleChange} /> */}
-                                    
-                                    </Flex>
-                                    <Flex mt='2'>
-                                        <MyInput id='ecran' label='Ecran' onChange={handleChange} />
-                                        <MyInput id='frequence' name='frequence' label='Fréquence' onChange={handleChange} />
-                                    </Flex>
-                                    <Flex mt='2'>
-                                        <MyInput id='systeme_expolitation' label='Système Exploitation' onChange={handleChange} />
-                                    </Flex>
-                                    <Flex mt='2' w='50%'>
-                                        <MyInput id='autonomie' label='Autonomie' onChange={handleChange} />
-                                    </Flex>
-                                    <Button colorScheme='teal' type="submit" my='4'>Ajouter</Button>
-                                </Form>
-                                    <Flex>
-                                        <Box p='6' boxShadow='xs'>
-                                            {values.file && 
-                                                <ImagePreview file={values.file} /> 
-                                            }
-                                        </Box>
-                                        <Box p='6'>
-                                           <List spacing={3}>
-                                                {values.title &&  <ListItem>{values.title} </ListItem> }
-                                                {values.mark &&  <ListItem>{values.mark} </ListItem> }
-                                                {values.reference &&  <ListItem>{values.reference} </ListItem> }
-                                                {values.ecran &&  <ListItem>{values.ecran} </ListItem> }
-                                                {values.ram &&  <ListItem>{values.ram} </ListItem>  }
-                                                {values.processeur && <ListItem>{values.processeur} </ListItem> }
-                                                {values.hdd &&  <ListItem>{values.hdd} </ListItem>  }
-                                                {values.price &&  <ListItem>{values.price} DH</ListItem>  }
-                                                {values.ssd &&  <ListItem>{values.ssd} </ListItem>  }
-                                                {values.frequence && <ListItem>{values.frequence} </ListItem> }
-                                                {values.quantite && <ListItem>{values.quantite} </ListItem> }
-                                                {values.stockage && <ListItem>{values.stockage} </ListItem> }
-                                                {values.autonomie && <ListItem>{values.autonomie} </ListItem> }
-                                                {values.model && <ListItem>{values.model} </ListItem> }
-                                            </List>
-                                        </Box>
-                                    </Flex>
+                                        </Flex>
+                                        <Flex mt='6' gap='8'>
+                                            <MyInput id='systeme_expolitation' label='Système Exploitation' onChange={handleChange} />
+                                            <MyInput 
+                                                id='frequence' 
+                                                name='frequence' 
+                                                label='Fréquence' 
+                                                onChange={handleChange} />
+                                        </Flex>
+                                        <Flex mt='6' gap='8' w='50%'>
+                                            <MyInput 
+                                                id='autonomie' 
+                                                label='Autonomie' 
+                                                onChange={handleChange} />
+                                        </Flex>
+                                        <Button colorScheme='teal' type="submit" my='4'>Ajouter</Button>
+                                    </Form>
+                                }
+                               
+                                {/* <Flex>
+                                    <Box p='6' boxShadow='xs'>
+                                        {values.file && 
+                                            <ImagePreview file={values.file} /> 
+                                        }
+                                    </Box>
+                                    <Box p='6'>
+                                        <List spacing={3}>
+                                            {values.title &&  <ListItem>{values.title} </ListItem> }
+                                            {values.mark &&  <ListItem>{values.mark} </ListItem> }
+                                            {values.reference &&  <ListItem>{values.reference} </ListItem> }
+                                            {values.ecran &&  <ListItem>{values.ecran} </ListItem> }
+                                            {values.ram &&  <ListItem>{values.ram} </ListItem>  }
+                                            {values.processeur && <ListItem>{values.processeur} </ListItem> }
+                                            {values.hdd &&  <ListItem>{values.hdd} </ListItem>  }
+                                            {values.price &&  <ListItem>{values.price} DH</ListItem>  }
+                                            {values.ssd &&  <ListItem>{values.ssd} </ListItem>  }
+                                            {values.frequence && <ListItem>{values.frequence} </ListItem> }
+                                            {values.quantite && <ListItem>{values.quantite} </ListItem> }
+                                            {values.stockage && <ListItem>{values.stockage} </ListItem> }
+                                            {values.autonomie && <ListItem>{values.autonomie} </ListItem> }
+                                            {values.model && <ListItem>{values.model} </ListItem> }
+                                        </List>
+                                    </Box>
+                                </Flex> */}
                                    
                               
-                                {/* <div className='row col-12 my-3'>
-                                    <div className='col-4 product-image'>
-                                        {values.file ? 
-                                            <ImagePreview file={values.file} /> :
-                                            <div>
-                                                <img src={noPhotos} className="img-thumbnail"/>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div className='col-8'>
-                                        <div className="card">
-                                            <div className="card-body">
-                                                <h5 class="card-title product-title">{values.title==='' ?  'Undefined' : values.title}</h5>
-                                                <p class="card-text product-price">{values.price} DH</p>
-                                            </div>
-                                            <div className='card-footer bg-white'>
-                                                <p className='text-primary product-information-title'>
-                                                    <BsInfoCircleFill/>
-                                                    <span className='mx-3'>Information du produit</span>
-                                                </p>
-                                                <ul class="list-group list-group-flush">
-                                                    {values.reference && <li class="list-group-item">{values.reference}</li>}
-                                                    {values.ram &&  <li class="list-group-item">{values.ram}</li>}
-                                                    {values.model &&  <li class="list-group-item">{values.model}</li>}
-                                                    {values.details &&  <li class="list-group-item">{values.details}</li>}
-                                                    {values.stockage &&  <li class="list-group-item">{values.stockage}</li> }
-                                                    {values.processeur &&  <li class="list-group-item">{values.processeur}</li> }
-                                                    {values.ecran &&  <li class="list-group-item">{values.ecran}</li>}
-                                                    {values.autonomie &&  <li class="list-group-item">{values.autonomie}</li>}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                             
                             </>  
                         )}
                 </Formik>

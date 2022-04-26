@@ -1,5 +1,5 @@
-import { Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Spacer, Text, useDisclosure } from '@chakra-ui/react'
-import React, { useContext, useEffect, useRef } from 'react'
+import { Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, IconButton, Input, InputGroup, InputRightElement, List, ListItem, Spacer, Text, useDisclosure } from '@chakra-ui/react'
+import React, { useContext, useRef } from 'react'
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { ShopContext } from '../../ApplicationContext'
@@ -10,10 +10,7 @@ const Navbar = () => {
     const btnRef = useRef()
     const {authUser, setAuthUser, isAdmin, setIsAdmin} = useContext(ShopContext)
 
-    useEffect(() => {
-        console.log(authUser)
-        console.log(isAdmin)
-    }, [])
+   
     
 
     return (

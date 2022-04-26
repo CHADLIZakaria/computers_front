@@ -36,15 +36,11 @@ const Rams = () => {
         },
         onSubmit: (values) => {
             if(values.id == 0) {
-                console.log("add ram")
                 RamsService.save(values).then((data) => {
-                    console.log(data.data)
                     setRams([...rams, {...values, id: data.data.id}])
-
                 })
             } 
             else {
-                console.log("update ram")
                 RamsService.update(values).then((data) => {
                     setRams(rams.map(myRam => {
                         if(data.data.id == myRam.id) {

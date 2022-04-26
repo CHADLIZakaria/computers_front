@@ -6,6 +6,7 @@ export const ShopContext = createContext()
 export const ShopProvider = props => {
     const [authUser, setAuthUser]=useState(null)
     const [isAdmin, setIsAdmin]=useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         let access_token = localStorage.getItem('user')
@@ -17,7 +18,6 @@ export const ShopProvider = props => {
             let decodeJwtJsonData = window.atob(jwtData)
             if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
                 setIsAdmin(true)
-                axiosConfig.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('user');
             }
             else {
                 setIsAdmin(false)
@@ -30,5 +30,6 @@ export const ShopProvider = props => {
         <ShopContext.Provider value={{authUser, setAuthUser, isAdmin, setIsAdmin}}>
             {props.children}
         </ShopContext.Provider>
+        
     )
 }

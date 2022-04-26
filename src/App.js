@@ -10,6 +10,7 @@ import Layout from './components/Layout'
 import { useContext, useEffect } from "react";
 import AuthenticationService from "./service/AuthenticationService";
 import Rams from "./pages/rams/rams";
+import axiosConfig from './axiosConfig'
 
 
 function App() {
@@ -35,13 +36,12 @@ function App() {
 const ProtectedRoute = ({
   children
 }) => {
-  let isAuth = false;
   let access_token = localStorage.getItem('user')
   if(access_token) {
     let jwtData = access_token.split('.')[1]
     let decodeJwtJsonData = window.atob(jwtData)
     if(JSON.parse(decodeJwtJsonData).roles.includes('ROLE_ADMIN')) {
-      isAuth = true;
+      axiosConfig.defaults.headers.common['Authorization'] = 'Bearer '+access_token;
       
       return  children ? children : <Outlet />;
     }
