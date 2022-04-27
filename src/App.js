@@ -1,16 +1,12 @@
 import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { ShopProvider } from './ApplicationContext';
+import axiosConfig from './axiosConfig';
 import Navbar from './components/Navbar/Navbar';
+import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import FormProduct from './pages/products/FormProduct';
 import Product from './pages/products/Product';
 import Products from './pages/products/products';
-import Home from './pages/Home/Home';
-import {ShopContext, ShopProvider} from './ApplicationContext'
-import Layout from './components/Layout'
-import { useContext, useEffect } from "react";
-import AuthenticationService from "./service/AuthenticationService";
-import Rams from "./pages/rams/rams";
-import axiosConfig from './axiosConfig'
 
 
 function App() {
@@ -22,7 +18,6 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/admin"  exact element={<Login /> } />
                 <Route element={<ProtectedRoute  />}>
-                  <Route path="/rams" element={<Rams />} />
                   <Route path="/products" element={<Products />} />
                   <Route path="/product/:id" element={<Product />} />
                   <Route path="/products/save" element={<FormProduct />} />

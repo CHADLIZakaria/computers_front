@@ -1,13 +1,22 @@
-import { FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
+import { FormControl, FormLabel, Select, Text } from '@chakra-ui/react'
 import React from 'react'
 
-const MySelect = ({id, label, keys, values, onChange}) => {
+const MySelect = ({id, label, data, onChange, error}) => {
   return (
     <FormControl variant='floating'>
-        <Select size='sm' placeholder={`Selectionnez ${label.toLowerCase()}`}>
-            {values.map((_, index)  => 
-                <option key={index} value={keys[index]}>{values[index]}</option>
-                )}
+        <Select 
+          id={id}
+          borderColor={error && 'red'}
+          size='sm' 
+          onChange={onChange}
+          placeholder={`Selectionnez ${label.toLowerCase()}`}>
+            {data.map((element, index)  => 
+              <option 
+                key={index} 
+                value={element}>
+                  {element}
+              </option>
+            )}
         </Select>
         <FormLabel 
           htmlFor={id} 
@@ -19,6 +28,7 @@ const MySelect = ({id, label, keys, values, onChange}) => {
           transform='scale(0.85) translateY(-24px)'>
             {label}
         </FormLabel>
+        {error && <Text fontSize='xs' color='red'>{error}</Text>}
     </FormControl>
   )
 }

@@ -10,32 +10,27 @@ class ProductService {
         return axios.get(`http://localhost:8080/api/products/${id}`).then(value => value.data)
     }
 
-    findByCategories(categoryName) {
-        return axios.get(`http://localhost:8080/api/category/${categoryName}/products`).then(value => value.data).catch(e => console.log(e))       
-    }
     deleteById(id) {
-       return axiosConfig.delete(`/admin/api/products/${id}`)
+        return axiosConfig.delete(`/admin/products/${id}`)
     }
 
     async saveProduct(product) {
+        console.log(product)
         const formData = new FormData();
-        formData.append('title', product.title)
-        formData.append('description', product.description)
+        formData.append('brand', product.brand)
+        formData.append('color', product.color)
+        formData.append('ecran', product.ecran)
         formData.append('price', product.price)
-        formData.append('mark', product.mark)
         formData.append('model', product.model)
         formData.append('ram', product.ram)
-        formData.append('reference', product.reference)
-        formData.append('stockage', product.stockage)
-        formData.append('processeur', product.processeur)
-        formData.append('quantite', product.quantite)
-        formData.append('ecran', product.ecran)
+        formData.append('hdd', product.hdd)
+        formData.append('ssd', product.ssd)
+        formData.append('processor', product.processor)
         formData.append('systeme_exploitation', product.systeme_exploitation)
-        formData.append('autonomie', product.autonomie)
         formData.append('file', product.file)
         axiosConfig.post('/admin/products/save', 
             formData,
-        ).then(value => console.log(value))
+        ).then(value => console.log("hi"))
     }
     
 }

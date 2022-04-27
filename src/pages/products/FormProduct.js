@@ -1,80 +1,79 @@
-import { Box, Button, Container, Flex, FormControl, FormLabel, IconButton, Input, List, ListItem } from '@chakra-ui/react'
+import { Button, Container, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as yup from 'yup'
-import ImagePreview from '../../components/ImagePreview/ImagePreview'
 import MyInput from '../../components/MyInput/MyInput'
 import MySelect from '../../components/MySelect/MySelect'
 import Title from '../../components/Title/Title'
+import { rams } from '../../data/data'
 import ProductService from '../../service/ProductService'
-import RamsService from '../../service/RamsService'
-import { FiSettings } from "react-icons/fi";
 
 const FormProduct = () => {
     const {id} = useParams()
-    const [rams, setRams] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate()
     const productSchema=yup.object().shape({
-        title: yup.string().required("Required"),
-        description: yup.string().required("Required"),
-        mark: yup.string().required("Required"),
         model: yup.string().required("Required"),
+        brand: yup.string().required("Required"),
+        processor: yup.string().required("Required"),
         ram: yup.string().required("Required"),
-        reference: yup.string().required("Required"),
         hdd: yup.string().required("Required"),
         ssd: yup.string().required("Required"),
-        processeur: yup.string().required("Required"),
         ecran: yup.string().required("Required"),
-        autonomie: yup.string().required("Required"),
-        frequence:  yup.string().required("Required"),
+        price: yup.number().required("Required")
     })
 
-    useEffect(() => {
-        RamsService.findAll().then(data => {
-            setRams(data.data);
-            setIsLoading(false)
-        })
-    }, [isLoading])
     
     return (
         <>
-            <Title title={"Add Products"} /> 
+            <Title title={"Ajouter Produits"} /> 
             <Container maxW='container.xl'>
                 <Formik 
-                    initialValues={{ title: '',  
-                                    price: 0, 
-                                    mark: '',
+                    initialValues={{ 
                                     model: '',
+                                    brand: '',
+                                    processor: '',
+                                    file: null,
+                                    price: 0, 
                                     ram: '',
-                                    reference: '',
+                                    color: '',
                                     hdd: '',
-                                    ssd:'',
-                                    processeur: '',
-                                    quantite: 1,
                                     ecran: '',
+                                    ssd:'',
                                     systeme_exploitation: '',
-                                    frequence: '',
-                                    autonomie: '',
-                                    file: null, }} 
+                                    frequence: ''
+                                }} 
                     enableReinitialize={true}
                     validationSchema={productSchema}
                     onSubmit={(values) => {
                         ProductService.saveProduct(values)
-                        navigate('/products')
+                        //navigate('/products')
                     }}>
                         {({values, setFieldValue, handleChange, errors}) => (
                             <>
-                                {!isLoading && 
-                                     <Form>
-                                        <Flex gap='8'>
-                                            <MyInput id='model' label='Model' onChange={handleChange} error={errors.model} />
-                                            <MyInput id='mark' label='Mark' onChange={handleChange} error={errors.mark} />
-                                        </Flex>
-                                        <Flex mt='6' gap='8'>
-                                            <MyInput id='reference' label='Référence' onChange={handleChange} />
-                                            <FormControl variant='floating'>
+                                <Form>
+                                    <Flex gap='8'>
+                                        <MyInput 
+                                            id='model' 
+                                            label='Model' 
+                                            onChange={handleChange} 
+                                            placeholder='e.g. HP'
+                                            error={errors.model} />
+                                        <MyInput 
+                                            id='brand' 
+                                            label='Mark' 
+                                            placeholder='e.g. HP'
+                                            onChange={handleChange} 
+                                            error={errors.brand} />
+                                    </Flex>
+                                    <Flex mt='6' gap='8'>
+                                        <MyInput 
+                                            id='processor' 
+                                            label='Processeur' 
+                                            onChange={handleChange} 
+                                            placeholder='e.g. Intel Core i3'
+                                            error={errors.processor} />
+                                        <FormControl variant='floating'>
                                             <FormLabel 
                                                 htmlFor={id} 
                                                 position='absolute'
@@ -84,74 +83,70 @@ const FormProduct = () => {
                                                 transformOrigin='left top'
                                                 transform='scale(0.85) translateY(-24px)'>
                                                     Image
-                                                </FormLabel>
-                                                <Input size='sm' name='file' type="file"  onChange={(e) => {
-                                                        setFieldValue('file', e.currentTarget.files[0])
-                                                    }}/>
-                                            </FormControl>
-                                        </Flex>
-                                        <Flex mt='6' gap='8'>
-                                            <Flex flex='1'>
-                                                <MyInput id='processeur' label='Processeur' onChange={handleChange} />
-                                            </Flex>
-                                            <Flex flex='1' alignItems='end'>
-                                                <MySelect 
-                                                    id='ram' 
-                                                    label='Ram'
-                                                    keys={rams.map(ram => ram.id)} 
-                                                    values={rams.map(ram => ram.ram)} 
-                                                    onChange={handleChange} />
-                                                <IconButton 
-                                                size='sm'
-                                                    icon={<FiSettings />}
-                                                    onClick={() => {
-                                                       
-                                                    } 
-                                                }
-                                                />
-                                            </Flex>
-                                            
-                                        </Flex>
-                                        <Flex mt='6' gap='8'>
-                                            <MyInput id='price' label='Prix' onChange={handleChange} />
-                                            <MySelect 
-                                                id='hdd' 
-                                                label='Stockage HDD' 
-                                                keys={['128 Go' ,'512 Go', '1 To', '2 To']} 
-                                                values={['128 Go' ,'512 Go', '1 To', '2 To']} 
-                                                onChange={handleChange} />
-                                        </Flex>
-                                        <Flex mt='6' gap='8'>
-                                            <MyInput 
-                                                id='ecran' 
-                                                label='Ecran' 
-                                                onChange={handleChange} />
-                                            <MySelect 
-                                                id='ssd' 
-                                                label='Stockage SSD' 
-                                                keys={['128 Go' ,'512 Go', '1 To', '2 To']} 
-                                                values={['128 Go' ,'512 Go', '1 To', '2 To']} 
-                                                onChange={handleChange} />
-                                        
-                                        </Flex>
-                                        <Flex mt='6' gap='8'>
-                                            <MyInput id='systeme_expolitation' label='Système Exploitation' onChange={handleChange} />
-                                            <MyInput 
-                                                id='frequence' 
-                                                name='frequence' 
-                                                label='Fréquence' 
-                                                onChange={handleChange} />
-                                        </Flex>
-                                        <Flex mt='6' gap='8' w='50%'>
-                                            <MyInput 
-                                                id='autonomie' 
-                                                label='Autonomie' 
-                                                onChange={handleChange} />
-                                        </Flex>
-                                        <Button colorScheme='teal' type="submit" my='4'>Ajouter</Button>
-                                    </Form>
-                                }
-                               
+                                            </FormLabel>
+                                            <Input size='sm' name='file' type="file"  onChange={(e) => {
+                                                setFieldValue('file', e.currentTarget.files[0])
+                                            }}/>
+                                        </FormControl>
+                                    </Flex>
+                                    <Flex mt='6' gap='8'>
+                                        <MyInput 
+                                            id='price' 
+                                            label='Prix' 
+                                            onChange={handleChange} 
+                                            placeholder='e.g. 3600.50'
+                                            error={errors.price} />
+                                        <MySelect 
+                                            id='ram' 
+                                            label='Ram'
+                                            data={rams} 
+                                            onChange={handleChange}
+                                            error={errors.ram} 
+                                            />
+                                    </Flex>
+                                    <Flex mt='6' gap='8'>
+                                        <MyInput 
+                                            id='color' 
+                                            label='Color' 
+                                            onChange={handleChange} 
+                                            placeholder='e.g. Black' />
+                                        <MySelect 
+                                            id='hdd' 
+                                            label='Stockage HDD' 
+                                            data={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                            onChange={handleChange} 
+                                            error={errors.hdd}
+                                            />
+                                    </Flex>
+                                    <Flex mt='6' gap='8'>
+                                        <MyInput 
+                                            id='ecran' 
+                                            label='Ecran' 
+                                            placeholder='e.g. 15.6" Laptop'
+                                            onChange={handleChange}
+                                            error={errors.ecran} />
+                                        <MySelect 
+                                            id='ssd' 
+                                            label='Stockage SSD' 
+                                            data={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                            onChange={handleChange} 
+                                            error={errors.ssd} />
+                                    </Flex>
+                                    <Flex mt='6' gap='8'>
+                                        <MyInput 
+                                            id='systeme_expolitation' 
+                                            label='Système Exploitation'
+                                            placeholder='e.g. Windows' 
+                                            onChange={handleChange} />
+                                        <MyInput 
+                                            id='frequence' 
+                                            name='frequence' 
+                                            label='Fréquence' 
+                                            placeholder='e.g. 2.4Hz'
+                                            onChange={handleChange} />
+                                    </Flex>
+                                    <Button colorScheme='teal' type="submit" my='4'>Ajouter</Button>
+                                </Form>
                                 {/* <Flex>
                                     <Box p='6' boxShadow='xs'>
                                         {values.file && 

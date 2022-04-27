@@ -1,12 +1,11 @@
-import { Container, Flex, IconButton, Input, InputGroup, InputRightElement, Progress, Spacer, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Container, Flex, IconButton, Input, InputGroup, InputRightElement, Spacer, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
-import MyTable from '../../components/Table/MyTable'
+import { useNavigate } from 'react-router-dom'
+import DataNotFound from '../../components/DataNotFound/DataNotFound'
+import MyProgress from '../../components/Progress/MyProgress'
 import Title from '../../components/Title/Title'
 import ProductService from '../../service/ProductService'
-import DataNotFound from '../../components/DataNotFound/DataNotFound'
-import { useNavigate } from 'react-router-dom'
-import MyProgress from '../../components/Progress/MyProgress'
 
 const Products = () => {
     const [products, setProducts] = useState([])
@@ -62,11 +61,15 @@ const Products = () => {
                                                 {product.ram}
                                             </Td>
                                         <Td>
-                                            <IconButton icon={<AiOutlineEdit />} colorScheme='blue' mr='1' onClick={() => navigate(`/product//edit`)}></IconButton>
+                                            <IconButton 
+                                                icon={<AiOutlineEdit />} 
+                                                colorScheme='blue' 
+                                                mr='1' 
+                                                onClick={() => navigate(`/product//edit`)}></IconButton>
                                             <IconButton 
                                                 icon={<AiOutlineDelete />} 
                                                 colorScheme='red' 
-                                                onClick={() => console.log('hi')} />
+                                                onClick={() => deleteProduct(product.id)} />
                                         </Td>
                                     </Tr>    
                                 )}

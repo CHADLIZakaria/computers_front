@@ -1,11 +1,9 @@
+import { Box, Container, Flex, Image, ListItem, UnorderedList } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { BsInfoCircleFill } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import Carousel from '../../components/Carousel/Carousel'
-import ProductService from '../../service/ProductService'
-import './Product.scss'
 import MyProgress from '../../components/Progress/MyProgress'
-import { Box, Container, Flex, Image, ListItem, UnorderedList } from '@chakra-ui/react'
+import ProductService from '../../service/ProductService'
 
 const Product = () => {
 
