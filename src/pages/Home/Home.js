@@ -31,9 +31,9 @@ const Home = () => {
     return (
         <>
             <Box>
-                <Box className='home-overlay' pos='absolute' top='0' w='100%' h={`50vh`} zIndex='-1'>
+                <Box className='home-overlay' pos='absolute' top='0' w='100%' h={`80vh`} zIndex='-1'>
                 </Box>
-                <Box  h={`calc(50vh - 66px)`} bg='grey.700' w='100%' pos="relative">
+                <Box  h={`calc(80vh - 66px)`} bg='grey.700' w='100%' pos="relative">
                     <Box 
                         pos='absolute' 
                         color='white' 
@@ -61,40 +61,46 @@ const Home = () => {
                 </Box>
             </Box>
             <Box>
-                <Title title='Mehdi Computers' />
                 {isLoading ? 
                     <MyProgress />
                     :
                     <>
-                        <Container maxW='container.xl' p='0'>
-                            <ProductHome />
-                            {/* <Flex>
+                        <Container maxW='content'>
+                            <Flex> 
                                 {products.map(product => 
                                     <Box 
                                         maxW='sm' 
                                         borderWidth='1px' 
                                         borderRadius='lg' 
-                                        overflow='hidden'
-                                        onClick={() => navigate(`/product/${product.id}`)}
-                                        >
-                                    <Image src={`http://localhost:8080/api/uploads/${product.image}`} />
-                                    <Box p='6'>
-                                    <Box
-                                        mt='1'
-                                        fontWeight='semibold'
-                                        as='h4'
-                                        lineHeight='tight'
-                                        isTruncated
-                                    >
-                                        {product.title}
-                                    </Box>
-                                    <Box>
-                                        {product.price} DH
-                                    </Box>
-                                    </Box>
+                                        m='5'
+                                        overflow='hidden'>
+                                            <Image p='4' src={`http://localhost:8080/api/uploads/${product.image}`} />
+                                            <Box p='4'>
+                                                <Text 
+                                                    mt='1'
+                                                    fontWeight='semibold'
+                                                    as='h4'
+                                                    noOfLines='2'>
+                                                    {product.brand+' '}  
+                                                    - {product.ecran+' '}  
+                                                    - {product.ram} Memory   
+                                                    - {product.hdd+' HDD '}
+                                                    - {product.ssd+' SSD '}  
+                                                    - {product.processor+' '} 
+                                                    - {product.color+' '}
+                                                </Text>
+                                                <Box>
+                                                    <Text  
+                                                        mt='1'
+                                                        fontWeight='bold'
+                                                        as='h3'>
+                                                        {product.price} DH
+                                                    </Text>
+                                                </Box>
+                                            </Box>
                                     </Box>
                                 )}
-                            </Flex> */}
+                            </Flex>        
                             <Pagination paginate={paginate} onClick={onNavigate} />
                         </Container>
                     </>
@@ -104,30 +110,4 @@ const Home = () => {
     )
 }
 
-const ProductHome = () => {
-    return (
-        <Box borderBottom='1px' borderColor='gray.200' p='30px'>
-            <Flex>
-                <Box  w='50%'>
-                    <Image src={laptop}/>
-                </Box>
-                <Box w='100%'>
-                    <Text color='blue.400'>
-                        <Link to='/'>
-                            HP - 17.3" Laptop - Intel Core i3 - 8GB Memory - 256GB SSD - Natural Silver
-                        </Link>
-                    </Text>
-                    <Flex mt="10px">
-                        <Text mr='100px'>Model: 17-by4013dx</Text>
-                        <Text>SKU: 6477887</Text>
-                    </Flex>
-                </Box>
-                <Box w='50%'>
-                    <Text fontSize='3xl' fontWeight='bold'>3509.59 DH</Text>
-                </Box>
-            </Flex>
-        </Box>
-        
-    );
-}
 export default Home

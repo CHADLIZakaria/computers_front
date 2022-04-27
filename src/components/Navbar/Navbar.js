@@ -13,8 +13,8 @@ const Navbar = () => {
             boxShadow='xl' 
             p='3' 
             rounded='md' 
-            bg='blue.600' 
-            opacity='.95' 
+            bg='gray.600' 
+            opacity='.9' 
             color='white'
             borderRadius='0' >
             <Center>

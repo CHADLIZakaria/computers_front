@@ -47,7 +47,16 @@ const Products = () => {
                             <Thead>
                                 <Tr>
                                     <Th>#ID</Th>
+                                    <Th>Model</Th>
+                                    <Th>Brand</Th>
+                                    <Th>Processeur</Th>
+                                    <Th>Ecran</Th>
+                                    <Th>Video Card</Th>
+                                    <Th>HDD</Th>
+                                    <Th>SSD</Th>
                                     <Th>Ram</Th>
+                                    <Th>Prix</Th>
+                                    <Th>Color</Th>
                                     <Th>Controll</Th>
                                 </Tr>
                             </Thead>
@@ -57,9 +66,36 @@ const Products = () => {
                                         <Td>
                                             {index+1}
                                         </Td>
-                                            <Td>
-                                                {product.ram}
-                                            </Td>
+                                        <Td>
+                                            {product.model}
+                                        </Td>
+                                        <Td>
+                                            {product.brand}
+                                        </Td>
+                                        <Td>
+                                            {product.processor}
+                                        </Td>
+                                        <Td>
+                                            {product.ecran}
+                                        </Td>
+                                        <Td>
+                                            {product.videoCard}
+                                        </Td>
+                                        <Td>
+                                            {product.hdd}
+                                        </Td>
+                                        <Td>
+                                            {product.ssd}
+                                        </Td>
+                                        <Td>
+                                            {product.ram}
+                                        </Td>
+                                        <Td>
+                                            {product.price} DH
+                                        </Td>
+                                        <Td>
+                                            {product.color}
+                                        </Td>
                                         <Td>
                                             <IconButton 
                                                 icon={<AiOutlineEdit />} 

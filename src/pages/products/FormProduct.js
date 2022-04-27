@@ -1,4 +1,4 @@
-import { Button, Container, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Button, Container, Flex, FormControl, FormLabel, Input, Text } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -20,7 +20,8 @@ const FormProduct = () => {
         hdd: yup.string().required("Required"),
         ssd: yup.string().required("Required"),
         ecran: yup.string().required("Required"),
-        price: yup.number().required("Required")
+        price: yup.number().required("Required").typeError('Not a valida number'),
+        file: yup.mixed().required("Required")
     })
 
     
@@ -47,7 +48,7 @@ const FormProduct = () => {
                     validationSchema={productSchema}
                     onSubmit={(values) => {
                         ProductService.saveProduct(values)
-                        //navigate('/products')
+                        navigate('/products')
                     }}>
                         {({values, setFieldValue, handleChange, errors}) => (
                             <>
@@ -57,7 +58,7 @@ const FormProduct = () => {
                                             id='model' 
                                             label='Model' 
                                             onChange={handleChange} 
-                                            placeholder='e.g. HP'
+                                            placeholder='e.g. 99-xxxxxxxx'
                                             error={errors.model} />
                                         <MyInput 
                                             id='brand' 
@@ -84,9 +85,15 @@ const FormProduct = () => {
                                                 transform='scale(0.85) translateY(-24px)'>
                                                     Image
                                             </FormLabel>
-                                            <Input size='sm' name='file' type="file"  onChange={(e) => {
-                                                setFieldValue('file', e.currentTarget.files[0])
-                                            }}/>
+                                            <Input 
+                                                size='sm' 
+                                                name='file' 
+                                                type="file"  
+                                                borderColor={errors.file && 'red'}
+                                                onChange={(e) => {
+                                                    setFieldValue('file', e.currentTarget.files[0])
+                                                }}/>
+                                            {errors.file && <Text fontSize='xs' color='red'>{errors.file}</Text>}
                                         </FormControl>
                                     </Flex>
                                     <Flex mt='6' gap='8'>
@@ -135,7 +142,7 @@ const FormProduct = () => {
                                     <Flex mt='6' gap='8'>
                                         <MyInput 
                                             id='systeme_expolitation' 
-                                            label='Système Exploitation'
+                                            label="Système d'éxploitation"
                                             placeholder='e.g. Windows' 
                                             onChange={handleChange} />
                                         <MyInput 
