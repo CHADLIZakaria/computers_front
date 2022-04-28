@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import MyInput from '../../components/MyInput/MyInput'
 import MySelect from '../../components/MySelect/MySelect'
 import Title from '../../components/Title/Title'
-import { rams } from '../../data/data'
+import { hdd, rams, ssd } from '../../data/data'
 import ProductService from '../../service/ProductService'
 
 const FormProduct = () => {
@@ -120,7 +120,7 @@ const FormProduct = () => {
                                         <MySelect 
                                             id='hdd' 
                                             label='Stockage HDD' 
-                                            data={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                            data={hdd} 
                                             onChange={handleChange} 
                                             error={errors.hdd}
                                             />
@@ -135,7 +135,7 @@ const FormProduct = () => {
                                         <MySelect 
                                             id='ssd' 
                                             label='Stockage SSD' 
-                                            data={['128 Go' ,'512 Go', '1 To', '2 To']} 
+                                            data={ssd} 
                                             onChange={handleChange} 
                                             error={errors.ssd} />
                                     </Flex>

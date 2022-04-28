@@ -1,4 +1,4 @@
-import { Box, Button, Collapse, Container, Flex, Image, SlideFade, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Collapse, Container, Flex, Grid, GridItem, Image, SlideFade, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Pagination from '../../components/Pagination/Pagination'
@@ -65,13 +65,16 @@ const Home = () => {
                     <MyProgress />
                     :
                     <>
-                        <Container maxW='content'>
-                            <Flex> 
+                            <Grid 
+                                px='10'
+                                columnGap='10'
+                                templateColumns='repeat(3, 1fr)'> 
                                 {products.map(product => 
-                                    <Box 
+                                    <GridItem 
                                         maxW='sm' 
                                         borderWidth='1px' 
                                         borderRadius='lg' 
+                                        w='100%'
                                         m='5'
                                         overflow='hidden'>
                                             <Image p='4' src={`http://localhost:8080/api/uploads/${product.image}`} />
@@ -98,11 +101,15 @@ const Home = () => {
                                                     </Text>
                                                 </Box>
                                             </Box>
-                                    </Box>
+                                    </GridItem>
                                 )}
-                            </Flex>        
-                            <Pagination paginate={paginate} onClick={onNavigate} />
-                        </Container>
+                            </Grid>   
+                            <Box py='2'>
+                                <Pagination 
+                                    paginate={paginate} 
+                                    onClick={onNavigate} />
+                            </Box>     
+                        
                     </>
                 }
            </Box>  

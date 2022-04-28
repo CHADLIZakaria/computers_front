@@ -13,7 +13,7 @@ class ProductService {
     deleteById(id) {
         return axiosConfig.delete(`/admin/products/${id}`)
     }
-
+    
     async saveProduct(product) {
         console.log(product)
         const formData = new FormData();
@@ -33,5 +33,8 @@ class ProductService {
         ).then(value => console.log("hi"))
     }
     
+    searchProducts(keyword) {
+        return axiosConfig.get(`/products/search?keyword=${keyword}`).then(value => value.data).catch(e => console.log(e))
+    }
 }
 export default new ProductService();
