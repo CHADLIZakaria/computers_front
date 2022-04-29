@@ -20,7 +20,7 @@ const Navbar = () => {
             return;
         }
         ProductService.searchProducts(search).then(values => {
-            setProducts(values.data.results)
+            setProducts(values.data)
         })
     }
 
@@ -30,8 +30,9 @@ const Navbar = () => {
             p='3' 
             rounded='md' 
             bg='gray.600' 
-            opacity='.9' 
+            w='100%'
             color='white'
+            maxH='65px'
             borderRadius='0' >
             <Center>
                 <Flex gap='10' alignItems='center'>
@@ -40,15 +41,18 @@ const Navbar = () => {
                         Mehdi Computers
                     </Link>
                     </Text>
-                    <Box position='relative'>
+                    <Box 
+                        zIndex='5'
+                        position='relative'>
                         <InputGroup 
-                            width='fit-content' 
+                            width='fit-content'
+                            h='80%' 
                             border='1px' 
                             borderColor='gray.200' 
                             color='gray.600'
                             bg='gray.200'
                             borderRadius='6px'
-                             > 
+                            > 
                             <InputRightElement
                                 pointerEvents='none'
                                 children={<AiOutlineSearch  color='gray'/>
@@ -57,42 +61,50 @@ const Navbar = () => {
                             <Input 
                                 type='text' 
                                 placeholder='Rechercher'
+                                focusBorderColor='transparent'
                                 onChange={(e) => {
                                     setSearch(e.target.value)
-                                   
                                 }}
                                 />
-                        </InputGroup>    
-                        <Box 
-                            bg='gray.200'
-                            position='absolute' 
-                            top='85%'
-                            w='100%'>
-                            {products.map(product => 
-                                <Box 
-                                border='1' 
-                                borderColor='red' 
-                                color='black'
-                                py='3'>
-                                    <Flex>
-                                        <Image 
-                                            boxSize='100px'
-                                            p='4' 
-                                            src={`http://localhost:8080/api/uploads/${product.image}`} />
-                                        <Text 
-                                            fontSize='xs'>
-                                            {product.brand+' '}  
-                                            - {product.ecran+' '}  
-                                            - {product.ram} Memory   
-                                            - {product.hdd+' HDD '}
-                                            - {product.ssd+' SSD '}  
-                                            - {product.processor+' '} 
-                                            - {product.color+' '}
-                                        </Text>
-                                    </Flex>
-                                </Box>
-                            )}
-                        </Box>
+                        </InputGroup>                          
+                        {products.length !== 0 && 
+                            <Box 
+                                position='absolute'
+                                top='85%'
+                                pt='2'
+                                h='50vh'
+                                bg='gray.200'
+                                overflowY='scroll'
+                                zIndex='999'
+                                w='150%'>
+                                {products.map((product, index) => 
+                                    <Box 
+                                    key={index}
+                                    borderBottom='1px' 
+                                    borderColor='gray' 
+                                    color='black'
+                                    px='3'>
+                                        <Flex
+                                            alignItems='center'>
+                                            <Image 
+                                                boxSize='80px'
+                                                p='4' 
+                                                src={`http://localhost:8080/api/uploads/${product.image}`} />
+                                            <Text 
+                                                fontSize='xs'>
+                                                {product.brand+' '}  
+                                                - {product.ecran+' '}  
+                                                - {product.ram} Memory   
+                                                - {product.hdd+' HDD '}
+                                                - {product.ssd+' SSD '}  
+                                                - {product.processor+' '} 
+                                                - {product.color+' '}
+                                            </Text>
+                                        </Flex>
+                                    </Box>
+                                )}
+                            </Box>
+                        }
                     </Box>
                 </Flex>
             </Center>

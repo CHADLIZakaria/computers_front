@@ -15,8 +15,9 @@ const Pagination = ({paginate, onClick}) => {
                     icon={<MdKeyboardArrowLeft />}
                     onClick={() => onClick(1)}
                     />
-                    {[...Array(paginate.totalPages).keys()].map(element => 
+                    {[...Array(paginate.totalPages).keys()].map((element, index) => 
                         <Button  
+                            key={index}
                             variant={`${element+1===paginate.page ? 'solid': 'outline'}`} 
                             colorScheme='blue'  
                             onClick={() => onClick(element+1)}
