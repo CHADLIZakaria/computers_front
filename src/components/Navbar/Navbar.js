@@ -1,15 +1,20 @@
-import { Box, Center, Flex, Image, Input, InputGroup, InputRightElement, Spacer, Text } from '@chakra-ui/react'
+import { Avatar, Box, Center, Fade, Flex, Image, Input, InputGroup, InputRightElement, List, ListIcon, ListItem, Spacer, Text, useDisclosure, WrapItem } from '@chakra-ui/react'
 import React, { useContext, useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { MdCheckCircle } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { ShopContext } from '../../ApplicationContext'
 import ProductService from '../../service/ProductService'
+import {RiSettings5Line} from 'react-icons/ri'
+import {IoLogOutOutline} from 'react-icons/io5'
 import './Navbar.scss'
+import Helper from '../../utils/Helper'
 
 const Navbar = () => {
-    const {isAdmin} = useContext(ShopContext)
+    const {isAdmin, setIsAdmin, setAuthUser} = useContext(ShopContext)
     const [products, setProducts] = useState([])
     const [search, setSearch] = useState('')
+    const { isOpen, onToggle } = useDisclosure()
 
     useEffect(() => {
        searchProducts()
@@ -22,6 +27,12 @@ const Navbar = () => {
         ProductService.searchProducts(search).then(values => {
             setProducts(values.data)
         })
+    }
+
+    const logout = () => {
+        localStorage.removeItem('user')
+        setIsAdmin(false)
+        setAuthUser(null)
     }
 
     return (
@@ -79,26 +90,28 @@ const Navbar = () => {
                                 w='150%'>
                                 {products.map((product, index) => 
                                     <Box 
-                                    key={index}
-                                    borderBottom='1px' 
-                                    borderColor='gray' 
-                                    color='black'
-                                    px='3'>
+                                        key={index}
+                                        borderBottom='1px' 
+                                        borderColor='gray' 
+                                        color='black'
+                                        px='3'>
                                         <Flex
                                             alignItems='center'>
                                             <Image 
                                                 boxSize='80px'
                                                 p='4' 
-                                                src={`http://localhost:8080/api/uploads/${product.image}`} />
+                                                src={`http://localhost:8080/api/uploads/${product.productImages[0].image}`} />
                                             <Text 
                                                 fontSize='xs'>
-                                                {product.brand+' '}  
-                                                - {product.ecran+' '}  
-                                                - {product.ram} Memory   
-                                                - {product.hdd+' HDD '}
-                                                - {product.ssd+' SSD '}  
-                                                - {product.processor+' '} 
-                                                - {product.color+' '}
+                                                {Helper.extractTitle(`
+                                                    ${product.brand      === '' ? 'Brand': product.brand},
+                                                    ${product.ecran      === '' ? 'Ecran': product.ecran},
+                                                    ${product.ram        === '' ? 'Ram': product.ram},
+                                                    ${product.hdd        === '' ? 'HDD': product.hdd},
+                                                    ${product.ssd        === '' ? 'SSD' : product.ssd},
+                                                    ${product.processor  === '' ? 'Processeur' : product.processor},
+                                                    ${product.color      === '' ? 'Couleur' : product.color}`)
+                                                }
                                             </Text>
                                         </Flex>
                                     </Box>
@@ -148,6 +161,47 @@ const Navbar = () => {
                         Contactez Nous
                     </Link> 
                 </Text>
+                <WrapItem 
+                    onClick={onToggle}
+                    position='relative'>
+                    <Avatar 
+                        name='zakaria'  
+                        cursor='pointer' 
+                        color='white'
+                        bg='#862101' />
+                    <Fade in={isOpen}  >
+                        <Box
+                            position='absolute'
+                            top='105%'
+                            right='0'
+                            color='white'
+                            bg='gray.700' 
+                            rounded='md'
+                            shadow='md'
+                            w='160px'
+                            px='3'
+                            py='2'
+                            zIndex='99'
+                        >
+                        <List spacing={3}>
+                                <Link to='/'>
+                                    <ListItem fontSize='sm' mb='2' px='2'>
+                                            <ListIcon as={RiSettings5Line} color='white' />
+                                            Modifier Profil
+                                    </ListItem>
+                                </Link>
+                                <Link to='/admin' onClick={logout}>
+                                    <ListItem fontSize='sm' px='2'>
+                                        <ListIcon as={IoLogOutOutline} color='white' />
+                                        Déconnexion
+                                    </ListItem>
+                                </Link>
+                                
+                            </List>
+                        </Box>
+                    </Fade>
+                </WrapItem>
+                
                     
             </Center>
         </Flex>

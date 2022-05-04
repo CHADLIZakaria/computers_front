@@ -1,3 +1,4 @@
+import { Image } from '@chakra-ui/react'
 import React, { useState } from 'react'
 
 const ImagePreview = ({file}) => {
@@ -10,7 +11,7 @@ const ImagePreview = ({file}) => {
     return (
         <div>
             {preview &&
-                <img src={preview} className="img-thumbnail"/>  
+                <Image src={preview} h='100%' />  
             } 
         </div>
     )

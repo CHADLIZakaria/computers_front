@@ -11,12 +11,14 @@ export const rams = [
     "64 GO",   
 ]
 export const ssd = [
+    "Aucun",
     "120 GO",
     "256 GO",
     "512 GO",
-    "1 TB"
+    "1 TB",
 ]
 export const hdd = [
+    "Aucun",
     "120 GO",
     "256 GO",
     "512 GO",

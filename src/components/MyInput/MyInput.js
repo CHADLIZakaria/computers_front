@@ -1,7 +1,7 @@
 import { FormControl, FormErrorMessage, FormLabel, Input, Text } from '@chakra-ui/react'
 import React from 'react'
 
-const MyInput = ({id, label, onChange, error, placeholder}) => {
+const MyInput = ({id, label, onChange, error, placeholder, value}) => {
   return (
       <FormControl variant='floating'>
         <Input 
@@ -10,6 +10,7 @@ const MyInput = ({id, label, onChange, error, placeholder}) => {
           id={id} 
           placeholder={placeholder} 
           onChange={onChange} 
+          value={value}
           borderColor={error && 'red'} />
         <FormLabel 
           position='absolute'

@@ -1,12 +1,11 @@
-import { Box, Button, Collapse, Container, Flex, Grid, GridItem, Image, SlideFade, Text, useDisclosure } from '@chakra-ui/react'
+import { Badge, Box, Button, Flex, Grid, GridItem, Image, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Pagination from '../../components/Pagination/Pagination'
 import MyProgress from '../../components/Progress/MyProgress'
-import Title from '../../components/Title/Title'
 import ProductService from '../../service/ProductService'
+import Helper from '../../utils/Helper'
 import './Home.scss'
-import laptop from './laptop.jpg'
 
 const Home = () => {
     const { isOpen, onOpen } = useDisclosure()
@@ -65,51 +64,71 @@ const Home = () => {
                     <MyProgress />
                     :
                     <>
-                            <Grid 
-                                px='10'
-                                columnGap='10'
-                                templateColumns='repeat(3, 1fr)'> 
-                                {products.map(product => 
-                                    <GridItem 
-                                        maxW='sm' 
-                                        borderWidth='1px' 
-                                        borderRadius='lg' 
-                                        w='100%'
-                                        m='5'
-                                        overflow='hidden'>
-                                            <Image p='4' src={`http://localhost:8080/api/uploads/${product.image}`} />
-                                            <Box p='4'>
-                                                <Text 
-                                                    mt='1'
-                                                    fontWeight='semibold'
-                                                    as='h4'
-                                                    noOfLines='2'>
-                                                    {product.brand+' '}  
-                                                    - {product.ecran+' '}  
-                                                    - {product.ram} Memory   
-                                                    - {product.hdd+' HDD '}
-                                                    - {product.ssd+' SSD '}  
-                                                    - {product.processor+' '} 
-                                                    - {product.color+' '}
-                                                </Text>
-                                                <Box>
-                                                    <Text  
-                                                        mt='1'
-                                                        fontWeight='bold'
-                                                        as='h3'>
+                        <Grid 
+                            px='10'
+                            mt='3'
+                            columnGap='2'
+                            rowGap='2'
+                            templateColumns='repeat(3, 1fr)'> 
+                            {products.map(product => 
+                                <GridItem 
+                                    maxW='sm' 
+                                    borderWidth='1px' 
+                                    borderRadius='lg' 
+                                    w='100%'
+                                    overflow='hidden'>
+                                        <Box  
+                                            height='300px'
+                                            position='relative'>
+                                            <Image 
+                                                p='2' 
+                                                src={`http://localhost:8080/api/uploads/${product.productImages[0].image}`} />
+                                            
+                                        </Box>
+                                        <Box>
+                                            <Text
+                                                position='relative'
+                                                textAlign='right'
+                                                right='0'
+                                                top='0'> 
+                                                <Badge  
+                                                    mt='3'
+                                                    fontWeight='bold'
+                                                    fontSize='lg' 
+                                                    px='3' 
+                                                    bg='gray.600'
+                                                    color='white'
+                                                    borderRadius='3px'
+                                                    marginTop='4'
+                                                    as='h3'>
                                                         {product.price} DH
-                                                    </Text>
-                                                </Box>
-                                            </Box>
-                                    </GridItem>
-                                )}
-                            </Grid>   
-                            <Box py='2'>
-                                <Pagination 
-                                    paginate={paginate} 
-                                    onClick={onNavigate} />
-                            </Box>     
-                        
+                                                </Badge>
+                                            </Text>
+                                            <Text 
+                                                mt='1'
+                                                fontWeight='semibold'
+                                                as='h4'
+                                                px='2'
+                                                noOfLines='3'>
+                                                {Helper.extractTitle(`
+                                                    ${product.brand      === '' ? 'Brand': product.brand},
+                                                    ${product.ecran      === '' ? 'Ecran': product.ecran},
+                                                    ${product.ram        === '' ? 'Ram': product.ram},
+                                                    ${product.hdd        === '' ? 'HDD': product.hdd},
+                                                    ${product.ssd        === '' ? 'SSD' : product.ssd},
+                                                    ${product.processor  === '' ? 'Processeur' : product.processor},
+                                                    ${product.color      === '' ? 'Couleur' : product.color}`)
+                                                }
+                                            </Text>
+                                        </Box>
+                                </GridItem>
+                            )}
+                        </Grid>   
+                        <Box py='2'>
+                            <Pagination 
+                                paginate={paginate} 
+                                onClick={onNavigate} />
+                        </Box>     
                     </>
                 }
            </Box>  

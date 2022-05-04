@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Select, Text } from '@chakra-ui/react'
 import React from 'react'
 
-const MySelect = ({id, label, data, onChange, error}) => {
+const MySelect = ({id, label, data, onChange, error, selected}) => {
   return (
     <FormControl variant='floating'>
         <Select 
@@ -13,6 +13,7 @@ const MySelect = ({id, label, data, onChange, error}) => {
             {data.map((element, index)  => 
               <option 
                 key={index} 
+                selected={element == selected && true}
                 value={element}>
                   {element}
               </option>

@@ -2,12 +2,12 @@ import { Container, Flex, IconButton, Input, InputGroup, InputRightElement, Spac
 import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
-import DataNotFound from '../../components/DataNotFound/DataNotFound'
-import MyProgress from '../../components/Progress/MyProgress'
-import Title from '../../components/Title/Title'
-import ProductService from '../../service/ProductService'
+import DataNotFound from '../../../components/DataNotFound/DataNotFound'
+import MyProgress from '../../../components/Progress/MyProgress'
+import Title from '../../../components/Title/Title'
+import ProductService from '../../../service/ProductService'
 
-const Products = () => {
+const AdminProducts = () => {
     const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [paginate, setPaginate] = useState({page: 1})
@@ -101,7 +101,7 @@ const Products = () => {
                                                 icon={<AiOutlineEdit />} 
                                                 colorScheme='blue' 
                                                 mr='1' 
-                                                onClick={() => navigate(`/product//edit`)}></IconButton>
+                                                onClick={() => navigate(`/product/edit/${product.id}`)} />
                                             <IconButton 
                                                 icon={<AiOutlineDelete />} 
                                                 colorScheme='red' 
@@ -109,69 +109,14 @@ const Products = () => {
                                         </Td>
                                     </Tr>    
                                 )}
-                                
-                            {/* {data.map(ligne => 
-                                    <Tr>
-                                        {Object.values(ligne).map(column => 
-                                                <Td width='100px'>
-                                                    {typeof(column)!=='object' ?
-                                                        column !== null &&   (/(.png|jpg|jpeg|gif|tiff)$/i).test(column) ? 
-                                                            <img src={`http://localhost:8080/api/uploads/${column}`}/> : 
-                                                            column:
-                                                        column === null ? "": column.name
-                                                    }
-                                                </Td>)}
-                                        <Td>
-                                            <IconButton icon={<AiOutlineEdit />} colorScheme='blue' mr='1' onClick={() => navigate(`/product/${Object.values(ligne)[0]}/edit`)}></IconButton>
-                                            <IconButton icon={<AiOutlineDelete />} colorScheme='red' onClick={() => onDelete(Object.values(ligne)[0])}></IconButton>
-                                        </Td>
-                                    </Tr>
-                                )} */}
                             </Tbody>
                         </Table>
-                        </TableContainer> 
-                        : 
-                        <DataNotFound />
+                    </TableContainer> 
+                    : 
+                    <DataNotFound />
             }
         </Container>
-        // <div>
-        //     <Title title={"Products"}/>
-        //     <div className='d-flex justify-content-between align-items-center my-4'>
-        //         <div className="form-group position-relative">
-        //             <Formik
-        //                 initialValues={{keyword: ''}}
-        //                 enableReinitialize={true}
-        //                 onSubmit={(value) => {
-        //                     //CategoryService.searchCategories(value.keyword).then(value => setCategories(value.data))
-        //                 }}
-        //             >
-        //                 <Form>
-        //                     <Field type="text" className="form-control" placeholder="Search" name="keyword" />
-        //                     <button  type="submit" className='btn position-absolute top-50 end-0  translate-middle-y'>
-        //                         <AiOutlineSearch  />
-        //                     </button>
-        //                 </Form>
-        //             </Formik>
-        //             <Button colorScheme='teal' size='xs'>
-        //                 Button
-        //             </Button>
-        //         </div>
-        //         <Link to="/products/save" className='btn btn-primary d-flex align-items-center'>
-        //             Add
-        //             <AiOutlinePlus />
-        //         </Link>
-        //     </div>
-        //     { 
-        //         isLoading ?
-        //             <Progress />
-        //             : 
-        //             products.length !== 0 ?
-        //                 <Table data={products} onDelete={deleteProduct}/>
-        //                 :
-        //                 <DataNotFound />    
-        //     }  
-        // </div>
     )
 }
 
-export default Products
+export default AdminProducts

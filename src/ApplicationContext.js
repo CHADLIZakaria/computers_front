@@ -1,13 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import axiosConfig from './axiosConfig'
 
 export const ShopContext = createContext()
 
 export const ShopProvider = props => {
     const [authUser, setAuthUser]=useState(null)
     const [isAdmin, setIsAdmin]=useState(false)
-    const [isLoading, setIsLoading] = useState(true)
-
+    
     useEffect(() => {
         let access_token = localStorage.getItem('user')
         if(access_token) {
