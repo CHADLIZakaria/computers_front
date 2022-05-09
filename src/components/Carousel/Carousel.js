@@ -1,7 +1,8 @@
-import { Box, Flex, IconButton, Image } from '@chakra-ui/react'
+import { Box, Flex, IconButton, Image, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
+import Helper from '../../utils/Helper'
 
 const Carousel = ({data}) => {
 
@@ -23,19 +24,28 @@ const Carousel = ({data}) => {
            {data.map((element, index) => 
                 <Box
                     w='33%'
+                    mr='3'
                     onClick={() => navigate(`/products/${element.id}`)}
                     display={[...Array(data.length).keys()].slice(currentIndex, currentIndex+3).includes(index) ? '': 'none'}
-                    
-                    className={`col-4  ${[...Array(data.length).keys()].slice(currentIndex, currentIndex+3).includes(index) ? '': 'd-none'}`}>
-                        <div className="card cursor-pointer">
+                   >
+                        <Box>
                             <Image 
                                 src={`http://localhost:8080/api/uploads/${element.productImages[0].image}`} 
                                 boxSize='300px'
-                                />
-                            <div className="card-body">
-                                <h5 className="card-title">{element.brand}</h5>
-                            </div>
-                        </div>
+                            />
+                            <Text noOfLines={2}>
+                                {Helper.extractTitle(`
+                                    ${element.brand      === '' ? 'Brand': element.brand},
+                                    ${element.ecran      === '' ? 'Ecran': element.ecran},
+                                    ${element.ram        === '' ? 'Ram': element.ram +' Mémoire'},
+                                    ${element.hdd        === '' ? 'HDD': element.hdd+ ' HDD'},
+                                    ${element.ssd        === '' ? 'SSD' : element.ssd+ ' SSD'},
+                                    ${element.processor  === '' ? 'Processeur' : element.processor},
+                                    ${element.color      === '' ? 'Couleur' : element.color}`)
+                                }
+                            </Text>
+                        
+                        </Box>
                 </Box>
             )}
         <IconButton  

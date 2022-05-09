@@ -125,9 +125,8 @@ const Product = () => {
             setProduct(value.data)
             setIsLoading(false)
         })
-        ProductService.findAll(1).then(value => {
-            setProducts(value.data.results)
-            console.log(value.data.results)
+        ProductService.findAllExceptId(id).then(value => {
+            setProducts(value.data)
         })
     }, [isLoading])
     

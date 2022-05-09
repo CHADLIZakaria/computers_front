@@ -84,7 +84,6 @@ const Home = () => {
                                             <Image 
                                                 p='2' 
                                                 src={`http://localhost:8080/api/uploads/${product.productImages[0].image}`} />
-                                            
                                         </Box>
                                         <Box>
                                             <Text
@@ -118,9 +117,9 @@ const Home = () => {
                                                 {Helper.extractTitle(`
                                                     ${product.brand      === '' ? 'Brand': product.brand},
                                                     ${product.ecran      === '' ? 'Ecran': product.ecran},
-                                                    ${product.ram        === '' ? 'Ram': product.ram},
-                                                    ${product.hdd        === '' ? 'HDD': product.hdd},
-                                                    ${product.ssd        === '' ? 'SSD' : product.ssd},
+                                                    ${product.ram        === '' ? 'Ram': product.ram +' Mémoire'},
+                                                    ${product.hdd        === '' ? 'HDD': product.hdd+ ' HDD'},
+                                                    ${product.ssd        === '' ? 'SSD' : product.ssd+ ' SSD'},
                                                     ${product.processor  === '' ? 'Processeur' : product.processor},
                                                     ${product.color      === '' ? 'Couleur' : product.color}`)
                                                 }

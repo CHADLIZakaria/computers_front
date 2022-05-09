@@ -2,7 +2,7 @@ import { Avatar, Box, Center, Fade, Flex, Image, Input, InputGroup, InputRightEl
 import React, { useContext, useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { MdCheckCircle } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ShopContext } from '../../ApplicationContext'
 import ProductService from '../../service/ProductService'
 import {RiSettings5Line} from 'react-icons/ri'
@@ -16,6 +16,7 @@ const Navbar = () => {
     const [products, setProducts] = useState([])
     const [search, setSearch] = useState('')
     const { isOpen, onToggle } = useDisclosure()
+    const location = useLocation()
 
     useEffect(() => {
        searchProducts()
@@ -41,7 +42,7 @@ const Navbar = () => {
             boxShadow='xl' 
             p='3' 
             rounded='md' 
-            bg='gray.600' 
+            bg={location.pathname==='/' ? 'transparent': 'gray.600'} 
             w='100%'
             color='white'
             maxH='65px'

@@ -28,12 +28,9 @@ class ProductService {
         formData.append('processor', product.processor)
         formData.append('videoCard', product.videoCard)
         formData.append('systemeExploitation', product.systemeExploitation)
-
         for (let i = 0; i < product.files.length; i++) {
             formData.append(`files`, product.files[i])
         }
-
-        //formData.append('files', product.files)
         axiosConfig.post('/admin/products/save', 
             formData,
         )
@@ -57,5 +54,10 @@ class ProductService {
     searchProducts(keyword) {
         return axiosConfig.get(`/products/search?keyword=${keyword}`).then(value => value.data).catch(e => console.log(e))
     }
+
+    findAllExceptId(id) {
+        return axiosConfig.get(`/products/not/${id}`).then(value => value.data).catch(e => console.log(e))
+    }
+
 }
 export default new ProductService();
