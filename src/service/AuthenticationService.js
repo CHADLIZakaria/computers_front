@@ -18,5 +18,12 @@ class AuthentificationService {
         localStorage.removeItem("user")
     }
 
+    getNameFromToken() {
+        let token = localStorage.getItem("user")
+        let jwtData = token.split('.')[1]
+        let decodeJwtJsonData = window.atob(jwtData)
+       return JSON.parse(decodeJwtJsonData).sub
+    }
+
 }
 export default new AuthentificationService()

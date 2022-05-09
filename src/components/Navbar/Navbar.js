@@ -9,6 +9,7 @@ import {RiSettings5Line} from 'react-icons/ri'
 import {IoLogOutOutline} from 'react-icons/io5'
 import './Navbar.scss'
 import Helper from '../../utils/Helper'
+import AuthenticationService from '../../service/AuthenticationService'
 
 const Navbar = () => {
     const {isAdmin, setIsAdmin, setAuthUser} = useContext(ShopContext)
@@ -161,46 +162,49 @@ const Navbar = () => {
                         Contactez Nous
                     </Link> 
                 </Text>
-                <WrapItem 
-                    onClick={onToggle}
-                    position='relative'>
-                    <Avatar 
-                        name='zakaria'  
-                        cursor='pointer' 
-                        color='white'
-                        bg='#862101' />
-                    <Fade in={isOpen}  >
-                        <Box
-                            position='absolute'
-                            top='105%'
-                            right='0'
+                {isAdmin &&
+                    <WrapItem 
+                        onClick={onToggle}
+                        position='relative'>
+                        <Avatar 
+                            name={AuthenticationService.getNameFromToken()}  
+                            cursor='pointer' 
                             color='white'
-                            bg='gray.700' 
-                            rounded='md'
-                            shadow='md'
-                            w='160px'
-                            px='3'
-                            py='2'
-                            zIndex='99'
-                        >
-                        <List spacing={3}>
-                                <Link to='/'>
-                                    <ListItem fontSize='sm' mb='2' px='2'>
-                                            <ListIcon as={RiSettings5Line} color='white' />
-                                            Modifier Profil
-                                    </ListItem>
-                                </Link>
-                                <Link to='/admin' onClick={logout}>
-                                    <ListItem fontSize='sm' px='2'>
-                                        <ListIcon as={IoLogOutOutline} color='white' />
-                                        Déconnexion
-                                    </ListItem>
-                                </Link>
-                                
-                            </List>
-                        </Box>
-                    </Fade>
-                </WrapItem>
+                            bg='#862101' />
+                        <Fade in={isOpen}  >
+                            <Box
+                                position='absolute'
+                                top='105%'
+                                right='0'
+                                color='white'
+                                bg='gray.700' 
+                                rounded='md'
+                                shadow='md'
+                                w='160px'
+                                px='3'
+                                py='2'
+                                zIndex='99'
+                            >
+                            <List spacing={3}>
+                                    <Link to='/'>
+                                        <ListItem fontSize='sm' mb='2' px='2'>
+                                                <ListIcon as={RiSettings5Line} color='white' />
+                                                Modifier Profil
+                                        </ListItem>
+                                    </Link>
+                                    <Link to='/admin' onClick={logout}>
+                                        <ListItem fontSize='sm' px='2'>
+                                            <ListIcon as={IoLogOutOutline} color='white' />
+                                            Déconnexion
+                                        </ListItem>
+                                    </Link>
+                                    
+                                </List>
+                            </Box>
+                        </Fade>
+                    </WrapItem>
+                }
+                
                 
                     
             </Center>
