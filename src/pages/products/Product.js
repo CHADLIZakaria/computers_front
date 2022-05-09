@@ -130,13 +130,17 @@ const Product = () => {
         { isLoading ? 
             <MyProgress /> : 
             <Flex gap='10'>
-                <Box>
+                <Box flex='2'>
                     <Box  
+                        h='300px'
                         w='50%'
+                        display='flex'
+                        alignItems='center'
                         margin='auto'>
                             <Image 
                                 src={`http://localhost:8080/api/uploads/${product.productImages[imageCurrentIndex].image}`} 
-                                boxSize='100%' 
+                                 w='100%'
+                                 maxH='100%'
                             />
                     </Box>
                     <Flex 
@@ -160,9 +164,7 @@ const Product = () => {
                         )}
                     </Flex>
                 </Box>
-                <Box 
-                    margin='auto'
-                    w='50%'
+                <Box flex='1'
                     mt='5'>
                     <Text 
                         mt='1'

@@ -1,3 +1,4 @@
+import { IconButton } from "@chakra-ui/react";
 import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { ShopProvider } from './ApplicationContext';
 import axiosConfig from './axiosConfig';
@@ -7,9 +8,31 @@ import AdminProducts from "./pages/admin/products/AdminProducts";
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Product from './pages/products/Product';
+import {BsHandIndexThumb} from 'react-icons/bs'
+import { useEffect, useState } from "react";
 
 
 function App() {
+  const [showScrollToTop, setShowScrollToTop] = useState(false)
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior:'smooth'
+    })
+  } 
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    });
+  }, [])
+  
+
   return (
       <ShopProvider>
         <Router>
@@ -24,6 +47,24 @@ function App() {
                   <Route path="/products/save" element={<AdminFormProduct />} />
                 </Route>
               </Routes>
+              
+              {showScrollToTop && 
+                <IconButton
+                  variant='outline'
+                  colorScheme='blue'
+                  position='fixed'
+                  right='0'
+                  bottom='10px'
+                  w='32px'
+                  h='32px'
+                  zIndex='999'
+                  color='blue'
+                  border='none'
+                  onClick={() => scrollToTop()}
+                  icon={<BsHandIndexThumb />}
+                />
+              }
+              
           </Router>
       </ShopProvider>
   );

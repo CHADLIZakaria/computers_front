@@ -1,6 +1,6 @@
 import { Badge, Box, Button, Flex, Grid, GridItem, Image, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Pagination from '../../components/Pagination/Pagination'
 import MyProgress from '../../components/Progress/MyProgress'
 import ProductService from '../../service/ProductService'
@@ -13,6 +13,7 @@ const Home = () => {
     const [paginate, setPaginate] = useState({page: 1})
     const [isLoading, setIsLoading] = useState(true)
     const location = useLocation()
+    const navigate = useNavigate()
     
     useEffect(() => {
         ProductService.findAll(paginate.page).then(value => {
@@ -108,8 +109,12 @@ const Home = () => {
                                                 mt='1'
                                                 fontWeight='semibold'
                                                 as='h4'
+                                                cursor='pointer'
                                                 px='2'
-                                                noOfLines='3'>
+                                                color='blue.300'
+                                                textDecoration='underline'
+                                                onClick={() => navigate(`/products/${product.id}`)}
+                                                noOfLines='2'>
                                                 {Helper.extractTitle(`
                                                     ${product.brand      === '' ? 'Brand': product.brand},
                                                     ${product.ecran      === '' ? 'Ecran': product.ecran},
