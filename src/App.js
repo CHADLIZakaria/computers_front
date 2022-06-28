@@ -1,5 +1,5 @@
 import { IconButton } from "@chakra-ui/react";
-import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { ShopProvider } from './ApplicationContext';
 import axiosConfig from './axiosConfig';
 import Navbar from './components/Navbar/Navbar';
@@ -14,6 +14,7 @@ import AdminUsers from "./pages/admin/users/AdminUsers";
 import SignUp from "./pages/SignUp/SignUp";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import AdminProfil from "./pages/admin/profil/AdminProfil";
+import 'react-app-polyfill/stable';
 
 
 function App() {
@@ -41,23 +42,21 @@ function App() {
       <ShopProvider>
         <Router>
               <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/products/:id" element={<Product />} />
-                <Route path="/login"  exact element={<Login /> } />
-                <Route path="/contact-us"  exact element={<ContactUs /> } />
-                <Route path="/signup"  exact element={<SignUp /> } />
-              
+              <Routes >
+                  <Route path="/" element={<Home />} exact />
+                  <Route path="/products/:id" element={<Product />} />
+                  <Route path="/login"  exact element={<Login /> } />
+                  <Route path="/contact-us"  exact element={<ContactUs /> } />
+                  <Route path="/signup"  exact element={<SignUp /> } />
+                  <Route element={<ProtectedRoute  />}>
+                    <Route path="/products" element={<AdminProducts />} />
+                    <Route path="/product/edit/:id" element={<AdminFormProduct />} />
+                    <Route path="/products/save" element={<AdminFormProduct />} />
+                    <Route path="/users" element={<AdminUsers />} />
+                    <Route path="/profil" element={<AdminProfil />} />
+                  </Route>
                 
-                <Route element={<ProtectedRoute  />}>
-                  <Route path="/products" element={<AdminProducts />} />
-                  <Route path="/product/edit/:id" element={<AdminFormProduct />} />
-                  <Route path="/products/save" element={<AdminFormProduct />} />
-                  <Route path="/users" element={<AdminUsers />} />
-                  <Route path="/profil" element={<AdminProfil />} />
-                </Route>
               </Routes>
-              
               {showScrollToTop && 
                 <IconButton
                   variant='outline'
@@ -74,7 +73,6 @@ function App() {
                   icon={<BsHandIndexThumb />}
                 />
               }
-              
           </Router>
       </ShopProvider>
   );
