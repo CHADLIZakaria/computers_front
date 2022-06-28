@@ -13,7 +13,7 @@ const MySelect = ({id, label, data, onChange, error, selected}) => {
             {data.map((element, index)  => 
               <option 
                 key={index} 
-                selected={element == selected && true}
+                selected={element === selected && true}
                 value={element}>
                   {element}
               </option>

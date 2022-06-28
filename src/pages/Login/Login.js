@@ -1,15 +1,16 @@
-import { Button, Flex, Heading, Input, InputGroup, InputLeftElement, InputRightElement, Stack } from '@chakra-ui/react'
-import axios from 'axios'
-import { Formik, Form } from 'formik'
-import React, { useContext } from 'react'
-import { AiFillLock, AiOutlineEye, AiOutlineUser } from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom'
+import { Box, Button, Flex, Heading, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useState } from 'react'
+import { useContext } from 'react'
+import { AiFillLock, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineUser } from 'react-icons/ai'
+import { Link, useNavigate } from 'react-router-dom'
 import { ShopContext } from '../../ApplicationContext'
 import axiosConfig from '../../axiosConfig'
 
 const Login = () => {
     const navigate = useNavigate()
     const {authUser, setAuthUser, isAdmin, setIsAdmin} = useContext(ShopContext)
+    const  [isPassword, setIsPassword]  = useState(true)
     return (
         <Flex
             flexDirection='column'
@@ -54,47 +55,64 @@ const Login = () => {
                         }}>
                             {({values, setFieldValue, handleChange}) => ( 
                                 <Form>
-                                    <InputGroup>
-                                        <InputLeftElement
-                                        pointerEvents='none'
-                                        color='gray.300'
-                                        fontSize='1.2em'
-                                        children={<AiOutlineUser />}
-                                        />
-                                        <Input 
-                                            type='text' 
-                                            placeholder='Username' 
-                                            name='username' 
-                                            borderColor='blue.400'
-                                            onChange={handleChange} />
-                                    </InputGroup>
-                                    <InputGroup>
-                                        <InputLeftElement
-                                        pointerEvents='none'
-                                        color='gray.300'
-                                        fontSize='1.2em'
-                                        children={<AiFillLock />}
-                                        />
-                                        <Input 
-                                            type='password' 
-                                            name='password' 
-                                            placeholder='Mot de passe' 
-                                            borderColor='blue.400' 
-                                            onChange={handleChange} />
-                                        <InputRightElement children={<AiOutlineEye color='green.500' />} />
-                                    </InputGroup>
-                                    <Button 
-                                        w='fit-content'  
-                                        colorScheme='blue'
-                                        type='submit'>
-                                        Connexion
-                                    </Button>
-                                    
+                                    <Stack spacing={3}>
+                                        <InputGroup>
+                                            <InputLeftElement
+                                            pointerEvents='none'
+                                            color='gray.300'
+                                            fontSize='1.2em'
+                                            children={<AiOutlineUser />}
+                                            />
+                                            <Input 
+                                                type='text' 
+                                                placeholder='Username' 
+                                                name='username' 
+                                                borderColor='blue.400'
+                                                onChange={handleChange} />
+                                        </InputGroup>
+                                        <InputGroup>
+                                            <InputLeftElement
+                                            pointerEvents='none'
+                                            color='gray.300'
+                                            fontSize='1.2em'
+                                            children={<AiFillLock />}
+                                            />
+                                            <Input 
+                                                type={isPassword ?  'password' : 'text'} 
+                                                name='password' 
+                                                placeholder='Mot de passe' 
+                                                borderColor='blue.400' 
+                                                onChange={handleChange} />
+                                            <InputRightElement>
+                                                <IconButton  
+                                                    bg='transparent !important'
+                                                    onClick={
+                                                        () => {
+                                                            setIsPassword(!isPassword)
+                                                        }
+                                                    }
+                                                    children={isPassword ? <AiOutlineEye />  : <AiOutlineEyeInvisible />} 
+                                                    >
+                                                </IconButton>
+                                            </InputRightElement>
+
+                                        </InputGroup>
+                                        <Button 
+                                            w='fit-content'  
+                                            colorScheme='blue'
+                                            type='submit'>
+                                            Connexion
+                                        </Button>
+                                        <Box pb='4'>
+                                            Vous n'avez pas de compte <br/>
+                                            <Text  textDecoration='underline' mb='1' color='blue.700'>
+                                                <Link to="/signup">Enregistrer vous</Link>
+                                            </Text>
+                                        </Box>
+                                    </Stack>
                                 </Form>
                             )}
-                        
                     </Formik>
-                
                 </Stack>
             </Flex>
         </Flex>

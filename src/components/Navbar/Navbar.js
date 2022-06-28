@@ -1,15 +1,14 @@
-import { Avatar, Box, Center, Fade, Flex, Image, Input, InputGroup, InputRightElement, List, ListIcon, ListItem, Spacer, Text, useDisclosure, WrapItem } from '@chakra-ui/react'
-import React, { useContext, useEffect, useState } from 'react'
+import { Avatar, Box, Center, Fade, Flex, HStack, Image, Input, InputGroup, InputRightElement, List, ListIcon, ListItem, Spacer, Text, useDisclosure, WrapItem } from '@chakra-ui/react'
+import { useContext, useEffect, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { MdCheckCircle } from 'react-icons/md'
-import { Link, useLocation } from 'react-router-dom'
+import { IoLogOutOutline } from 'react-icons/io5'
+import { RiSettings5Line } from 'react-icons/ri'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ShopContext } from '../../ApplicationContext'
-import ProductService from '../../service/ProductService'
-import {RiSettings5Line} from 'react-icons/ri'
-import {IoLogOutOutline} from 'react-icons/io5'
-import './Navbar.scss'
-import Helper from '../../utils/Helper'
 import AuthenticationService from '../../service/AuthenticationService'
+import ProductService from '../../service/ProductService'
+import Helper from '../../utils/Helper'
+import './Navbar.scss'
 
 const Navbar = () => {
     const {isAdmin, setIsAdmin, setAuthUser} = useContext(ShopContext)
@@ -22,7 +21,7 @@ const Navbar = () => {
        searchProducts()
     }, [search])
     const searchProducts=() => {
-        if(search == '') {
+        if(search === '') {
             setProducts([])
             return;
         }
@@ -51,7 +50,7 @@ const Navbar = () => {
                 <Flex gap='10' alignItems='center'>
                     <Text>
                     <Link to='/'>
-                        Mehdi Computers
+                       Computers
                     </Link>
                     </Text>
                     <Box 
@@ -128,41 +127,45 @@ const Navbar = () => {
                 <Text 
                     mr='3'
                     p='2'>
-                    <Link 
-                        to="/" 
-                        className='link link-active'>
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) => 
+                                    (isActive ? "link link-active" : "link")}>
                         Acceuil
-                    </Link> 
+                    </NavLink> 
+                </Text>
+                <Text 
+                    mr='3'
+                    p='2'>
+                    <NavLink 
+                        to="/contact-us" 
+                        className={({ isActive }) =>  
+                        (isActive ? "link link-active" : "link")}>
+                        Contactez Nous
+                    </NavLink> 
                 </Text>
                 {isAdmin && 
-                    <Text 
-                        mr='3'
-                        p='2'>
-                        <Link 
+                    <HStack>
+                    <Text p='2'>
+                        <NavLink 
                             to="/products"
-                            className='link'>
+                            className={({ isActive }) =>  
+                                (isActive ? "link link-active" : "link")}>
                             Gérer les produits
-                        </Link> 
+                        </NavLink> 
                     </Text>
+                    <Text 
+                       
+                        p='2'>
+                        <NavLink 
+                            to="/users"
+                            className={({ isActive }) =>  
+                                (isActive ? "link link-active" : "link")}>
+                            Users
+                        </NavLink> 
+                    </Text>
+                    </HStack>
                 } 
-                <Text 
-                    mr='3'
-                    p='2'>
-                    <Link 
-                        to="/"
-                        className='link'>
-                        A propos de nous
-                    </Link> 
-                </Text>
-                <Text 
-                    mr='3'
-                    p='2'>
-                    <Link 
-                        to="/"
-                        className='link'>
-                        Contactez Nous
-                    </Link> 
-                </Text>
                 {isAdmin &&
                     <WrapItem 
                         onClick={onToggle}
@@ -187,13 +190,13 @@ const Navbar = () => {
                                 zIndex='99'
                             >
                             <List spacing={3}>
-                                    <Link to='/'>
+                                    <Link to='/profil'>
                                         <ListItem fontSize='sm' mb='2' px='2'>
                                                 <ListIcon as={RiSettings5Line} color='white' />
                                                 Modifier Profil
                                         </ListItem>
                                     </Link>
-                                    <Link to='/admin' onClick={logout}>
+                                    <Link to='/login' onClick={logout}>
                                         <ListItem fontSize='sm' px='2'>
                                             <ListIcon as={IoLogOutOutline} color='white' />
                                             Déconnexion
@@ -205,9 +208,6 @@ const Navbar = () => {
                         </Fade>
                     </WrapItem>
                 }
-                
-                
-                    
             </Center>
         </Flex>
     )

@@ -1,5 +1,4 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, Text } from '@chakra-ui/react'
-import React from 'react'
+import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react'
 
 const MyInput = ({id, label, onChange, error, placeholder, value}) => {
   return (

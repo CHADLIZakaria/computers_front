@@ -1,6 +1,4 @@
-import axios from "axios";
-import axiosConfig from '../axiosConfig'
-import { hdd } from "../data/data";
+import axiosConfig from '../axiosConfig';
 
 class ProductService {
     findAll(page) {
